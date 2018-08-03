@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example | D3 Simple Gauge</title>
+  <style>
+    svg {
+      width: 400px;
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+<div class="chart-gauge"></div>
+
+<script type="text/javascript" src="../node_modules/d3/dist/d3.min.js"></script>
+<script type="text/javascript" src="../dist/simple-gauge.js"></script>
+<script>
+const simpleGauge = new SimpleGauge({
+  el: d3.select('body').append('svg'),
+  width: 400,
+  height: 400,
+  sectionsCount: 2
+});
+simpleGauge.percent = 0.6;
+</script>
+</body>
+</html>

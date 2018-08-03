@@ -1,0 +1,35 @@
+{
+  "name": "d3-simple-gauge",
+  "version": "1.0.0",
+  "description": "Simple gauge written with D3.js",
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoinebeland/d3-simple-gauge.git"
+  },
+  "keywords": [
+    "gauge",
+    "d3",
+    "data-visualization"
+  ],
+  "author": "Antoine Béland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antoinebeland/d3-simple-gauge/issues"
+  },
+  "homepage": "https://github.com/antoinebeland/d3-simple-gauge#readme",
+  "dependencies": {
+    "d3": "^5.5.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-uglify": "^3.0.1",
+    "pump": "^3.0.0"
+  }
+}

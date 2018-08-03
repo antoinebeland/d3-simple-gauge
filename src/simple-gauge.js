@@ -9,7 +9,13 @@
  */
 
 const SimpleGauge = (() => {
-  // TODO: Put constants here.
+  const CONSTANTS = {
+    PAD_RAD: 0.05,
+    CHAR_INSET: 10,
+    BAR_WIDTH: 40,
+    NEEDLE_ANIMATION_DELAY: 500,
+    NEEDLE_ANIMATION_DURATION: 3000
+  };
 
   const percToDeg = perc => perc * 360;
   const degToRad = deg => (deg * Math.PI) / 180;
@@ -44,9 +50,9 @@ const SimpleGauge = (() => {
     update(percentage) {
       const self = this;
       this._el.transition()
-        .delay(500)
+        .delay(CONSTANTS.NEEDLE_ANIMATION_DELAY)
         .ease(d3.easeElastic)
-        .duration(3000)
+        .duration(CONSTANTS.NEEDLE_ANIMATION_DURATION)
         .selectAll('.needle')
         .tween('progress', function () {
           const elementThis = this;
@@ -109,11 +115,11 @@ const SimpleGauge = (() => {
     /**
      * Initializes a new instance of the SimpleGauge class.
      *
-     * @param config.el
-     * @param config.width
-     * @param config.height
-     * @param config.sectionsCount
-     * @param [config.barWidth]
+     * @param config.el               The D3 element to use to create the gauge (must be a group or a SVG element).
+     * @param config.width            The width of the gauge.
+     * @param config.height           The height of the gauge.
+     * @param config.sectionsCount    The number of sections in the gauge.
+     * @param [config.barWidth]       The bar width of the gauge. By default, the value is 40.
      */
     constructor(config) {
       if (!config.el) {
@@ -135,20 +141,25 @@ const SimpleGauge = (() => {
       this._width = config.width;
       this._height = config.height;
       this._sectionsCount = config.sectionsCount;
-      this._barWidth = config.barWidth || 40;
+      this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
       this._percent = 0;
       this._initialize();
     }
 
     /**
-     * Gets the percent
+     * Gets the needle percent.
      *
-     * @returns {number|*}
+     * @returns {number|*}    The percentage position of the needle.
      */
     get percent() {
       return this._percent;
     }
 
+    /**
+     * Sets the needle percent.
+     *
+     * @param percent         The percentage to set.
+     */
     set percent(percent) {
       if (isNaN(percent) || percent < 0 || percent > 1) {
         throw new RangeError('The percentage must be between 0 and 1.');
@@ -159,19 +170,22 @@ const SimpleGauge = (() => {
       }
     }
 
+    /**
+     * Initializes the simple gauge.
+     *
+     * @private
+     */
     _initialize() {
       const sectionPercentage = 1 / this._sectionsCount / 2;
-      const padRad = 0.05;
-      const chartInset = 10;
+      const padRad = CONSTANTS.PAD_RAD;
+      const chartInset = CONSTANTS.CHAR_INSET;
 
-      // start at 270deg
-      let totalPercent = .75;
-      const radius = Math.min(this._width, this._height) / 2;
+      let totalPercent = 0.75; // start at 270deg
+      const radius = Math.min(this._width, this._height * 2) / 2;
 
       const chart = this._el.append('g')
-        .attr('transform', `translate(${(this._width) / 2}, ${(this._height) / 2})`);
+        .attr('transform', `translate(${this._width / 2}, ${this._height})`);
 
-      // build gauge bg
       d3.range(1, this._sectionsCount + 1).forEach((d, sectionIndex) => {
         const arcStartRad = percToRad(totalPercent);
         const arcEndRad = arcStartRad + percToRad(sectionPercentage);
@@ -190,7 +204,7 @@ const SimpleGauge = (() => {
           .attr('class', `arc chart-color${sectionIndex}`)
           .attr('d', arc);
       });
-      this._needle = new Needle(chart, this._height * 0.25, 15);
+      this._needle = new Needle(chart, this._height * 0.5, 15);
     }
   }
 

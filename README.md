@@ -24,7 +24,7 @@ of the master branch (see `dist` folder)
 - Clone the repo: `git clone https://github.com/antoinebeland/d3-simple-gauge.git`
 - Install with [npm](https://www.npmjs.com/package/d3-simple-gauge): `npm install d3-simple-gauge`
 
-Be sure to include `simple-gauge.js` file in your project before to start.
+Be sure to include `d3-simple-gauge.js` file in your project before to start.
 
 Usage
 -----

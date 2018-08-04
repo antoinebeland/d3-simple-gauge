@@ -11,6 +11,8 @@ The base code was used from [this example](https://codepen.io/anon/pen/WKyXgr) o
 it work with D3.js v5, and I restructured the code to make it more flexible. Thanks to the original author for its 
 work.
 
+A [demo](https://www.antoinebeland.com/d3-simple-gauge/) of the gauge is available on my personal website.
+
 Quick Start
 -----------
 The first step you need to do before to use the script is to include [D3.js v5](https://github.com/d3/d3) in your 

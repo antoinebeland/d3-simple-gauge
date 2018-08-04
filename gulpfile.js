@@ -12,7 +12,8 @@ gulp.task('dist', cb => {
   pump([
       gulp.src('./src/*.js'),
       babel({
-        presets: ['env']
+        presets: ['env'],
+        plugins: ["transform-es2015-modules-umd"]
       }),
       uglify(),
       gulp.dest('dist')

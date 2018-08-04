@@ -39,7 +39,7 @@ const svg = d3.select('body')
   .attr('width', 400)
   .attr('height', 250);
 
-const simpleGauge = new SimpleGauge({
+const simpleGauge = new window.d3SimpleGauge.SimpleGauge({
   animationDelay: 0,          // The delay in ms before to play the needle animation (optional)
   animationDuration: 3000,    // The duration in ms of the needle animation (optional)
   barWidth: 40,               // The bar width of the gauge (optional)
@@ -82,6 +82,15 @@ example to know how to use the classes.
 .needle-center {
   fill: #464A4F;
 }
+```
+
+This script is written in ECMAScript 6 and is transpiled in [UMD](https://github.com/umdjs/umd) format. So, you can 
+import it easily as a module. Look at the following examples to know how to import it:
+
+```javascript
+import { SimpleGauge } from 'd3-simple-gauge';          // In an ES6 application
+
+const SimpleGauge = window.d3SimpleGauge.SimpleGauge    // In the browser
 ```
 
 License

@@ -4,42 +4,51 @@
   <meta charset="UTF-8">
   <title>Example | D3 Simple Gauge</title>
   <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+    }
+
+    div {
+      margin-bottom: 2em;
+    }
+
     svg {
       height: 250px;
       width: 400px;
     }
 
-    /* Stroke color for the groups */
-    .arc {
-      stroke: #ccc;
-    }
-
     /* Fill color for the first group */
     .chart-color1 {
-      fill: #fee6ce;
+      fill: #dea82c;
     }
 
     /* Fill color for the second group */
     .chart-color2 {
-      fill: #fdae6b;
+      fill: #e9621a;
     }
 
     /* Fill color for the third group */
     .chart-color3 {
-      fill: #e6550d;
+      fill: #e92213;
     }
 
     /* Fill color for the needle */
     .needle,
     .needle-center {
-      fill: #333;
+      fill: #464A4F;
     }
   </style>
 </head>
 <body>
 <article>
   <h1>D3 Simple Needle</h1>
-  <button>Update</button>
+  <div>
+    <p>
+      Needle position: <strong id="position">50%</strong>
+    </p>
+    <button>Change</button>
+  </div>
 </article>
 <script type="text/javascript" src="../node_modules/d3/dist/d3.min.js"></script>
 <script type="text/javascript" src="../dist/simple-gauge.js"></script>
@@ -62,7 +71,10 @@
   });
 
   d3.select('button')
-    .on('click', () => simpleGauge.percent = Math.random());
+    .on('click', () => {
+      simpleGauge.percent = Math.random();
+      d3.select('#position').text(d3.format(".0%")(simpleGauge.percent));
+    });
 </script>
 </body>
 </html>

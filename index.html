@@ -13,11 +13,6 @@
       margin-bottom: 2em;
     }
 
-    svg {
-      height: 250px;
-      width: 400px;
-    }
-
     /* Fill color for the first group */
     .chart-color1 {
       fill: #dea82c;
@@ -51,14 +46,14 @@
   </div>
 </article>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
-<script type="text/javascript" src="./simple-gauge.js"></script>
+<script type="text/javascript" src="./d3-simple-gauge.js"></script>
 <script>
   const svg = d3.select('body > article')
     .append('svg')
     .attr('width', 400)
     .attr('height', 250);
 
-  const simpleGauge = new SimpleGauge({
+  const simpleGauge = new window.d3SimpleGauge.SimpleGauge({
     animationDelay: 0,          // The delay in ms before to play the needle animation (optional)
     animationDuration: 3000,    // The duration in ms of the needle animation (optional)
     barWidth: 40,               // The bar width of the gauge (optional)

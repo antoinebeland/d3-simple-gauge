@@ -8,8 +8,7 @@ A simple gauge written with D3.js that can be easily included in a project.
 
 The base code was used from [this example](https://codepen.io/anon/pen/WKyXgr) on CodePen and from 
 [this tutorial](https://jaketrent.com/post/rotate-gauge-needle-in-d3/). I refactored the code of the example to make 
-it work with D3.js v5, and I restructured the code to make it more flexible. Thanks to the original author for its 
-work.
+it work with D3.js v5, and I restructured the code to make it more flexible. Thanks to the original author ([Jack Trent](https://github.com/jaketrent)) for its work.
 
 A [demo](https://www.antoinebeland.com/d3-simple-gauge/) of the gauge is available on my personal website.
 

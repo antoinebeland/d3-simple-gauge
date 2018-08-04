@@ -1,7 +1,7 @@
 {
   "name": "d3-simple-gauge",
   "version": "1.0.0",
-  "description": "Simple gauge written with D3.js",
+  "description": "A simple gauge written with D3.js",
   "main": "gulpfile.js",
   "scripts": {
     "start": "gulp"

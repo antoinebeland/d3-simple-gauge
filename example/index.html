@@ -5,24 +5,64 @@
   <title>Example | D3 Simple Gauge</title>
   <style>
     svg {
-      width: 400px;
       height: 250px;
+      width: 400px;
+    }
+
+    /* Stroke color for the groups */
+    .arc {
+      stroke: #ccc;
+    }
+
+    /* Fill color for the first group */
+    .chart-color1 {
+      fill: #fee6ce;
+    }
+
+    /* Fill color for the second group */
+    .chart-color2 {
+      fill: #fdae6b;
+    }
+
+    /* Fill color for the third group */
+    .chart-color3 {
+      fill: #e6550d;
+    }
+
+    /* Fill color for the needle */
+    .needle,
+    .needle-center {
+      fill: #333;
     }
   </style>
 </head>
 <body>
-<div class="chart-gauge"></div>
-
+<article>
+  <h1>D3 Simple Needle</h1>
+  <button>Update</button>
+</article>
 <script type="text/javascript" src="../node_modules/d3/dist/d3.min.js"></script>
 <script type="text/javascript" src="../dist/simple-gauge.js"></script>
 <script>
-const simpleGauge = new SimpleGauge({
-  el: d3.select('body').append('svg'),
-  width: 400,
-  height: 200,
-  sectionsCount: 2
-});
-simpleGauge.percent = 0.6;
+  const svg = d3.select('body > article')
+    .append('svg')
+    .attr('width', 400)
+    .attr('height', 250);
+
+  const simpleGauge = new SimpleGauge({
+    animationDelay: 0,          // The delay in ms before to play the needle animation (optional)
+    animationDuration: 3000,    // The duration in ms of the needle animation (optional)
+    barWidth: 40,               // The bar width of the gauge (optional)
+    easeType: d3.easeElastic,   // The ease type to use with the needle animation (optional)
+    el: svg.append('g'),        // The element that hosts the gauge
+    height: 200,                // The height of the gauge
+    percent: 0.5,               // The initial percentage of he needle (optional)
+    sectionsCount: 3,           // The number of sections in the gauge
+    width: 400                  // The width of the gauge
+  });
+
+  d3.select('button')
+    .on('click', () => simpleGauge.percent = Math.random());
 </script>
 </body>
 </html>

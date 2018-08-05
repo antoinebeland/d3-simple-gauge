@@ -60,8 +60,10 @@
     easeType: d3.easeElastic,   // The ease type to use with the needle animation (optional)
     el: svg.append('g'),        // The element that hosts the gauge
     height: 200,                // The height of the gauge
+    interval: [0, 200],         // The interval (min and max values) of the gauge (optional)
+    needleRadius: 15,           // The radius of the needle (optional)
     percent: 0.5,               // The initial percentage of he needle (optional)
-    sectionsCount: 3,           // The number of sections in the gauge
+    sectionsCount: 2,           // The number of sections in the gauge
     width: 400                  // The width of the gauge
   });
 

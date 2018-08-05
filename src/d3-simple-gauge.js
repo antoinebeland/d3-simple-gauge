@@ -136,11 +136,11 @@ export class SimpleGauge {
    * @param [config.barWidth]             The bar width of the gauge. By default, the value is 40.
    * @param [config.easeType]             The ease type to use for the needle animation. By default, the value is
    *                                      "d3.easeElastic".
-   * @param config.el                     The D3 element to use to create the gauge (must be a group or a SVG element).
+   * @param config.el                     The D3 element to use to create the gauge (must be a group or an SVG element).
    * @param config.height                 The height of the gauge.
    * @param [config.interval]             The interval (min and max values) of the gauge. By default, the interval
    *                                      ia [0, 1].
-   * @param [config.needleRadius]         The radius of the needle. By the default, the radius is 15.
+   * @param [config.needleRadius]         The radius of the needle. By default, the radius is 15.
    * @param [config.percent]              The percentage to use for the needle position. By default, the value is 0.
    * @param config.sectionsCount          The number of sections in the gauge.
    * @param config.width                  The width of the gauge.
@@ -178,7 +178,7 @@ export class SimpleGauge {
     this._easeType = config.easeType || CONSTANTS.EASE_TYPE;
     this._el = config.el;
     this._height = config.height;
-    this._needleRadius = config.needleRadius || CONSTANTS.NEEDLE_RADIUS;
+    this._needleRadius = (config.needleRadius !== undefined) ? config.needleRadius : CONSTANTS.NEEDLE_RADIUS;
     this._sectionsCount = config.sectionsCount;
     this._width = config.width;
     this.interval = config.interval || [0, 1];
@@ -237,7 +237,7 @@ export class SimpleGauge {
   }
 
   /**
-   * Sets the needle position based on a value inside the interval.
+   * Sets the needle position based on the specified value inside the interval.
    * If the value specified is outside the interval, the value will be
    * clamped to fit inside the domain.
    *

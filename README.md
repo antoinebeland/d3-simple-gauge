@@ -39,15 +39,9 @@ const svg = d3.select('body')
   .attr('height', 250);
 
 const simpleGauge = new window.d3SimpleGauge.SimpleGauge({
-  animationDelay: 0,          // The delay in ms before to play the needle animation (optional)
-  animationDuration: 3000,    // The duration in ms of the needle animation (optional)
-  barWidth: 40,               // The bar width of the gauge (optional)
-  easeType: d3.easeElastic,   // The ease type to use with the needle animation (optional)
   el: svg.append('g'),        // The element that hosts the gauge
-  height: 200,                // The height of the gauge
+  height: 200,                // The height of the gauge   
   interval: [0, 200],         // The interval (min and max values) of the gauge (optional)
-  needleRadius: 15,           // The radius of the needle (optional)
-  percent: 0.5,               // The initial percentage of he needle (optional)         
   sectionsCount: 2,           // The number of sections in the gauge
   width: 400                  // The width of the gauge
 });
@@ -60,11 +54,51 @@ setTimeout(() => {
   }, 1500);
 }, 1500);
 ```
+This script is written in ECMAScript 6 and is transpiled in [UMD](https://github.com/umdjs/umd) format. So, you can 
+import it easily as a module. Look at the following examples to know how to import it:
 
+```javascript
+// In an ES6 application
+import { SimpleGauge } from './path/to/script/d3-simple-gauge';
+
+// In the browser
+const SimpleGauge = window.d3SimpleGauge.SimpleGauge
+```
+
+### Configuration
+The gauge can be easily customized with the following parameters when you create a new instance of `SimpleGauge` class.
+There are only four required parameters when you create a gauge. The others are optional (noted between `[]`).
+
+| Name                      | Description                                                                                   |
+| ------------------------- | ----------------------------------------------------------------------------------------------|
+| ```[animationDelay]```    | The delay in ms before to start the needle animation. By default, the value is ```0```.       |
+| ```[animationDuration]``` | The duration in ms of the needle animation. By default, the value is ```3000```.              |
+| ```[barWidth]```          | The bar width of the gauge. By default, the value is ```40```.                                |
+| ```[easeType]```          | The ease type to use for the needle animation. By default, the value is ```d3.easeElastic```. |
+| ```el```                  | The D3 element to use to create the gauge (must be a group or an SVG element).                |
+| ```height```              | The height of the gauge.                                                                      |
+| ```[interval]```          | The interval (min and max values) of the gauge. By default, the interval ia ```[0, 1]```.     |
+| ```[needleRadius]```      | The radius of the needle. By default, the radius is ```15```.                                 |
+| ```[percent]```           | The percentage to use for the needle position. By default, the value is ```0```.              |
+| ```sectionsCount```       | The number of sections in the gauge.                                                          |
+| ```width```               | The width of the gauge.                                                                       |
+
+
+
+### Properties
+Once the gauge is initialized, you can use the following properties to manipulate it.
+
+| Name            | Description                                                                                                                                                                     |
+| ----------------| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ```interval```  | Gets or sets the interval of the gauge (min and max values).                                                                                                                    |
+| ```percent```   | Gets or sets the percentage of the gauge. The percent must be between [0,&nbsp;1].                                                                                                   |
+| ```value```     | Sets the needle position based on the specified value inside the interval. If the value specified is outside the interval, the value will be clamped to fit inside the domain.  |
+
+### Style
 To apply colors on the gauge, you need to define some CSS classes. There are two classes used to set the needle colors 
 (`needle` and `needle-center`), and there is one class for each group generated (`chart-color{i}`), where `{i}` is a 
 number between 1 and the groups count, to apply a specific color to a group. You can take a look at the following 
-example to know how to use the classes.
+example to know how to use these classes.
 
 ```css
 /* Fill color for the first group */
@@ -89,13 +123,26 @@ example to know how to use the classes.
 }
 ```
 
-This script is written in ECMAScript 6 and is transpiled in [UMD](https://github.com/umdjs/umd) format. So, you can 
-import it easily as a module. Look at the following examples to know how to import it:
+There are also other classes that can be used. Based on the percentage of the gauge, the arc points out by the needle
+has the `active` class. This can be useful if you want to apply a different style to the active group. Also, when the 
+minimum (0%) or the maximum (100%) of the gauge are reached, the gauge element has `min` or `max` classes. Look at the
+following examples to know how to use these classes.
 
-```javascript
-import { SimpleGauge } from 'd3-simple-gauge';          // In an ES6 application
+```css
+/* Put the active group always in black */
+.arc.active {
+  fill: #000;
+}
 
-const SimpleGauge = window.d3SimpleGauge.SimpleGauge    // In the browser
+/* When the gauge is at 0%, all the arcs appear blue */ 
+.min .arc {
+  fill: #00f;
+}
+
+/* When the gauge is at 100%, all the arcs appear red */
+.max .arc {
+  fill: #f00;
+}
 ```
 
 License

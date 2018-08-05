@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const pump = require('pump');
+const rename = require('gulp-rename');
 
 /**
  * Dist Task
@@ -15,7 +16,9 @@ gulp.task('dist', cb => {
         presets: ['env'],
         plugins: ["transform-es2015-modules-umd"]
       }),
+      gulp.dest('dist'),
       uglify(),
+      rename({ extname: '.min.js' }),
       gulp.dest('dist')
     ],
     cb

@@ -138,6 +138,9 @@ export class SimpleGauge {
    *                                      "d3.easeElastic".
    * @param config.el                     The D3 element to use to create the gauge (must be a group or a SVG element).
    * @param config.height                 The height of the gauge.
+   * @param [config.interval]             The interval (min and max values) of the gauge. By default, the interval
+   *                                      ia [0, 1].
+   * @param [config.needleRadius]         The radius of the needle. By the default, the radius is 15.
    * @param [config.percent]              The percentage to use for the needle position. By default, the value is 0.
    * @param config.sectionsCount          The number of sections in the gauge.
    * @param config.width                  The width of the gauge.
@@ -166,16 +169,46 @@ export class SimpleGauge {
     if (config.barWidth !== undefined && (isNaN(config.barWidth) || config.barWidth <= 0)) {
       throw new RangeError('The bar width must be a positive number');
     }
+    if (config.needleRadius !== undefined && (isNaN(config.needleRadius) || config.needleRadius < 0)) {
+      throw new RangeError('The needle radius must be greater or equal to 0.');
+    }
     this._animationDelay = config.animationDelay || CONSTANTS.NEEDLE_ANIMATION_DELAY;
     this._animationDuration = config.animationDuration || CONSTANTS.NEEDLE_ANIMATION_DURATION;
     this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
     this._easeType = config.easeType || CONSTANTS.EASE_TYPE;
     this._el = config.el;
     this._height = config.height;
+    this._needleRadius = config.needleRadius || CONSTANTS.NEEDLE_RADIUS;
     this._sectionsCount = config.sectionsCount;
     this._width = config.width;
+    this.interval = config.interval || [0, 1];
     this.percent = (config.percent !== undefined) ? config.percent : 0;
     this._initialize();
+  }
+
+  /**
+   * Gets the interval of the gauge.
+   *
+   * @returns {Array}   An array of two elements that represents the min and the max values of the gauge.
+   */
+  get interval() {
+    return this._scale.domain();
+  }
+
+  /**
+   * Sets the interval of the gauge (min and max values).
+   *
+   * @param interval
+   */
+  set interval(interval) {
+    if (!(interval instanceof Array) || interval.length !== 2 ||
+      isNaN(interval[0]) ||isNaN(interval[1]) || interval[0] > interval[1]) {
+      throw new Error('The interval specified is invalid.');
+    }
+    this._scale = d3.scaleLinear()
+      .domain(interval)
+      .range([0, 1])
+      .clamp(true);
   }
 
   /**
@@ -188,7 +221,7 @@ export class SimpleGauge {
   }
 
   /**
-   * Sets the needle percent.
+   * Sets the needle percent. The percent must be between 0 and 1.
    *
    * @param percent         The percentage to set.
    */
@@ -200,6 +233,21 @@ export class SimpleGauge {
       this._needle.update(percent);
     }
     this._percent = percent;
+    this._update();
+  }
+
+  /**
+   * Sets the needle position based on a value inside the interval.
+   * If the value specified is outside the interval, the value will be
+   * clamped to fit inside the domain.
+   *
+   * @param value           The value to use to set the needle position.
+   */
+  set value(value) {
+    if (isNaN(value)) {
+      throw new Error('The specified value must be a number');
+    }
+    this.percent = this._scale(value);
   }
 
   /**
@@ -212,13 +260,13 @@ export class SimpleGauge {
     const padRad = CONSTANTS.PAD_RAD;
     const chartInset = CONSTANTS.CHAR_INSET;
 
-    let totalPercent = 0.75; // start at 270deg
+    let totalPercent = 0.75; // Start at 270deg
     const radius = Math.min(this._width, this._height * 2) / 2;
 
-    const chart = this._el.append('g')
+    this._chart = this._el.append('g')
       .attr('transform', `translate(${this._width / 2}, ${this._height})`);
 
-    chart.selectAll('.arc')
+    this._arcs = this._chart.selectAll('.arc')
       .data(d3.range(1, this._sectionsCount + 1))
       .enter()
       .append('path')
@@ -242,10 +290,25 @@ export class SimpleGauge {
       animationDelay: this._animationDelay,
       animationDuration: this._animationDuration,
       easeType: this._easeType,
-      el: chart,
+      el: this._chart,
       length: this._height * 0.5,
       percent: this._percent,
-      radius: CONSTANTS.NEEDLE_RADIUS
+      radius: this._needleRadius
     });
+    this._update();
+  }
+
+  /**
+   * Updates the active arc and the gauge status (min or max) based on the current percent.
+   *
+   * @private
+   */
+  _update() {
+    if (!this._arcs) {
+      return;
+    }
+    this._arcs.classed('active', (d, i) => i === Math.floor(this._percent * this._sectionsCount));
+    this._chart.classed('min', this._percent === 0);
+    this._chart.classed('max', this._percent === 1);
   }
 }

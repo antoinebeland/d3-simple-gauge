@@ -30,7 +30,7 @@ Usage
 -----
 The gauge is very simple to use. You only have to initialize a new instance of the gauge with a configuration
 like in the following example to make it work. Once the gauge is initialized, you can set the percentage position of
-the needle with the `percent` property.
+the needle with the `percent` or `value` properties.
 
 ```javascript
 const svg = d3.select('body')
@@ -45,13 +45,19 @@ const simpleGauge = new window.d3SimpleGauge.SimpleGauge({
   easeType: d3.easeElastic,   // The ease type to use with the needle animation (optional)
   el: svg.append('g'),        // The element that hosts the gauge
   height: 200,                // The height of the gauge
+  interval: [0, 200],         // The interval (min and max values) of the gauge (optional)
+  needleRadius: 15,           // The radius of the needle (optional)
   percent: 0.5,               // The initial percentage of he needle (optional)         
   sectionsCount: 2,           // The number of sections in the gauge
   width: 400                  // The width of the gauge
 });
 
 setTimeout(() => {
-  simpleGauge.percent = 0.7;  // The new percent of the needle to set
+  simpleGauge.percent = 0.7;  // The new percent of the needle to set (70%)
+  
+  setTimeout(() => {
+    simpleGauge.value = 42;  // The new value of the needle to set inside the interval (21%)
+  }, 1500);
 }, 1500);
 ```
 

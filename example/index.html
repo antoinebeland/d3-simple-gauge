@@ -12,27 +12,6 @@
     div {
       margin-bottom: 2em;
     }
-
-    /* Fill color for the first group */
-    .chart-color1 {
-      fill: #dea82c;
-    }
-
-    /* Fill color for the second group */
-    .chart-color2 {
-      fill: #e9621a;
-    }
-
-    /* Fill color for the third group */
-    .chart-color3 {
-      fill: #e92213;
-    }
-
-    /* Fill color for the needle */
-    .needle,
-    .needle-center {
-      fill: #464A4F;
-    }
   </style>
 </head>
 <body>
@@ -63,8 +42,14 @@
     interval: [0, 200],         // The interval (min and max values) of the gauge (optional)
     needleRadius: 15,           // The radius of the needle (optional)
     percent: 0.5,               // The initial percentage of he needle (optional)
-    sectionsCount: 2,           // The number of sections in the gauge
-    width: 400                  // The width of the gauge
+    sectionsCount: 3,           // The number of sections in the gauge
+    width: 400,                 // The width of the gauge,
+    sectionsColors: [           // The color of each section
+      'green',
+      'orange',
+      'red'
+    ],
+    needleColor : 'black'       // The needle color
   });
 
   d3.select('button')

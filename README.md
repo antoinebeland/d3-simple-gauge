@@ -19,7 +19,7 @@ project.
 
 Once you have included D3 in your dependencies, you have the following options to use the script:
 
-- Use the latest [version](https://raw.githubusercontent.com/antoinebeland/d3-simple-gauge/master/dist/simple-gauge.js) 
+- Use the latest [version](https://raw.githubusercontent.com/antoinebeland/d3-simple-gauge/master/dist/d3-simple-gauge.js) 
 of the master branch (see `dist` folder)
 - Clone the repo: `git clone https://github.com/antoinebeland/d3-simple-gauge.git`
 - Install with [npm](https://www.npmjs.com/package/d3-simple-gauge): `npm install d3-simple-gauge`

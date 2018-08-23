@@ -34,6 +34,7 @@ class Needle {
    * @param config                      The configuration to use to initialize the needle.
    * @param config.animationDelay       The delay in ms before to start the needle animation.
    * @param config.animationDuration    The duration in ms of the needle animation.
+   * @param config.color                The color to use for the needle.
    * @param config.easeType             The ease type to use for the needle animation.
    * @param config.el                   The parent element of the needle.
    * @param config.length               The length of the needle.
@@ -46,6 +47,7 @@ class Needle {
     }
     this._animationDelay = config.animationDelay;
     this._animationDuration = config.animationDuration;
+    this._color = config.color;
     this._easeType = config.easeType;
     this._el = config.el;
     this._length = config.length;
@@ -93,6 +95,14 @@ class Needle {
     this._el.append('path')
       .attr('class', 'needle')
       .attr('d', this._getPath(this._percent));
+
+    if (this._color) {
+      this._el.select('.needle-center')
+        .style('fill', this._color);
+
+      this._el.select('.needle')
+        .style('fill', this._color);
+    }
   }
 
   /**
@@ -140,9 +150,11 @@ export class SimpleGauge {
    * @param config.height                 The height of the gauge.
    * @param [config.interval]             The interval (min and max values) of the gauge. By default, the interval
    *                                      ia [0, 1].
+   * @param [config.needleColor]          The needle color.
    * @param [config.needleRadius]         The radius of the needle. By default, the radius is 15.
    * @param [config.percent]              The percentage to use for the needle position. By default, the value is 0.
    * @param config.sectionsCount          The number of sections in the gauge.
+   * @param [config.sectionsColors]       The color to use for each section.
    * @param config.width                  The width of the gauge.
    */
   constructor(config) {
@@ -172,6 +184,10 @@ export class SimpleGauge {
     if (config.needleRadius !== undefined && (isNaN(config.needleRadius) || config.needleRadius < 0)) {
       throw new RangeError('The needle radius must be greater or equal to 0.');
     }
+    if (config.sectionsColors !== undefined && config.sectionsColors.length !== config.sectionsCount) {
+      throw new RangeError('The sectionsColors length must match with the sectionsCount.');
+    }
+
     this._animationDelay = config.animationDelay || CONSTANTS.NEEDLE_ANIMATION_DELAY;
     this._animationDuration = config.animationDuration || CONSTANTS.NEEDLE_ANIMATION_DURATION;
     this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
@@ -181,8 +197,12 @@ export class SimpleGauge {
     this._needleRadius = (config.needleRadius !== undefined) ? config.needleRadius : CONSTANTS.NEEDLE_RADIUS;
     this._sectionsCount = config.sectionsCount;
     this._width = config.width;
+    this._sectionsColors = config.sectionsColors;
+    this._needleColor = config.needleColor;
+
     this.interval = config.interval || [0, 1];
     this.percent = (config.percent !== undefined) ? config.percent : 0;
+
     this._initialize();
   }
 
@@ -286,6 +306,11 @@ export class SimpleGauge {
 
         return arc(this);
       });
+
+    if (this._sectionsColors) {
+      this._arcs.style('fill', sectionIndex => this._sectionsColors[sectionIndex - 1]);
+    }
+
     this._needle = new Needle({
       animationDelay: this._animationDelay,
       animationDuration: this._animationDuration,
@@ -293,7 +318,8 @@ export class SimpleGauge {
       el: this._chart,
       length: this._height * 0.5,
       percent: this._percent,
-      radius: this._needleRadius
+      radius: this._needleRadius,
+      color: this._needleColor
     });
     this._update();
   }

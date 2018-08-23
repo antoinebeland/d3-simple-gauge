@@ -69,21 +69,21 @@ const SimpleGauge = window.d3SimpleGauge.SimpleGauge
 The gauge can be easily customized with the following parameters when you create a new instance of `SimpleGauge` class.
 There are only four required parameters when you create a gauge. The others are optional (noted between `[]`).
 
-| Name                      | Description                                                                                   |
-| ------------------------- | ----------------------------------------------------------------------------------------------|
-| ```[animationDelay]```    | The delay in ms before to start the needle animation. By default, the value is ```0```.       |
-| ```[animationDuration]``` | The duration in ms of the needle animation. By default, the value is ```3000```.              |
-| ```[barWidth]```          | The bar width of the gauge. By default, the value is ```40```.                                |
-| ```[easeType]```          | The ease type to use for the needle animation. By default, the value is ```d3.easeElastic```. |
-| ```el```                  | The D3 element to use to create the gauge (must be a group or an SVG element).                |
-| ```height```              | The height of the gauge.                                                                      |
-| ```[interval]```          | The interval (min and max values) of the gauge. By default, the interval ia ```[0, 1]```.     |
-| ```[needleRadius]```      | The radius of the needle. By default, the radius is ```15```.                                 |
-| ```[percent]```           | The percentage to use for the needle position. By default, the value is ```0```.              |
-| ```sectionsCount```       | The number of sections in the gauge.                                                          |
-| ```width```               | The width of the gauge.                                                                       |
-
-
+| Name                  | Description                                                                               |
+| ----------------------| ------------------------------------------------------------------------------------------|
+| `[animationDelay]`    | The delay in ms before to start the needle animation. By default, the value is `0`.       |
+| `[animationDuration]` | The duration in ms of the needle animation. By default, the value is `3000`.              |
+| `[barWidth]`          | The bar width of the gauge. By default, the value is `40`.                                |
+| `[easeType]`          | The ease type to use for the needle animation. By default, the value is `d3.easeElastic`. |
+| `el`                  | The D3 element to use to create the gauge (must be a group or an SVG element).            |
+| `height`              | The height of the gauge.                                                                  |
+| `[interval]`          | The interval (min and max values) of the gauge. By default, the interval is `[0, 1]`.     |
+| `[needleColor]`       | The color to use for the needle.                                                          |
+| `[needleRadius]`      | The radius of the needle. By default, the radius is `15`.                                 |
+| `[percent]`           | The percentage to use for the needle position. By default, the value is `0`.              |
+| `[sectionsColors]`    | An array that contains the color to apply for each section.                               |
+| `sectionsCount`       | The number of sections in the gauge.                                                      |
+| `width`               | The width of the gauge.                                                                   |
 
 ### Properties
 Once the gauge is initialized, you can use the following properties to manipulate it.
@@ -95,7 +95,26 @@ Once the gauge is initialized, you can use the following properties to manipulat
 | ```value```     | Sets the needle position based on the specified value inside the interval. If the value specified is outside the interval, the value will be clamped to fit inside the domain.  |
 
 ### Style
-To apply colors on the gauge, you need to define some CSS classes. There are two classes used to set the needle colors 
+To apply colors on the gauge, you can specify them with the `needleColor` and `sectionsColors` properties in the
+configuration or with CSS classes.
+
+If you choose to use `needleColor` and `sectionsColors` properties to set colors, be sure to specify these properties 
+in the configuration like in the following example. Noted that the color specified should be a valid 
+[CSS color](https://www.w3schools.com/css/css_colors.asp).
+
+```js
+{
+  // ...
+  needleColor: 'black', // The needle color
+  sectionsColors: [     // The color of each section
+    'green',
+    '#ffa500',
+    'rgb(255, 0, 0)'
+  ]
+}
+```
+
+You can use CSS classes too to apply colors on the gauge. There are two classes used to set the needle colors 
 (`needle` and `needle-center`), and there is one class for each group generated (`chart-color{i}`), where `{i}` is a 
 number between 1 and the groups count, to apply a specific color to a group. You can take a look at the following 
 example to know how to use these classes.
@@ -144,6 +163,9 @@ following examples to know how to use these classes.
   fill: #f00;
 }
 ```
+
+If you have used `sectionsColor` properties to set group colors, you have to add `!important` rule with the
+`fill` property if you want that `active`, `min` or `max` classes can be applied.     
 
 License
 -------

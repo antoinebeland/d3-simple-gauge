@@ -51,6 +51,7 @@ class Needle {
     this._length = config.length;
     this._percent = config.percent;
     this._radius = config.radius;
+    this._color = config.color;
     this._initialize();
   }
 
@@ -86,12 +87,14 @@ class Needle {
   _initialize() {
     this._el.append('circle')
       .attr('class', 'needle-center')
+      .attr('fill', this._color)
       .attr('cx', 0)
       .attr('cy', 0)
       .attr('r', this._radius);
 
     this._el.append('path')
       .attr('class', 'needle')
+      .attr('fill', this._color)
       .attr('d', this._getPath(this._percent));
   }
 
@@ -144,6 +147,8 @@ export class SimpleGauge {
    * @param [config.percent]              The percentage to use for the needle position. By default, the value is 0.
    * @param config.sectionsCount          The number of sections in the gauge.
    * @param config.width                  The width of the gauge.
+   * @param config.sectionsColors         The html color for each section
+   * @param config.needleColor            The needle color
    */
   constructor(config) {
     if (!config.el) {
@@ -172,6 +177,11 @@ export class SimpleGauge {
     if (config.needleRadius !== undefined && (isNaN(config.needleRadius) || config.needleRadius < 0)) {
       throw new RangeError('The needle radius must be greater or equal to 0.');
     }
+
+    if (config.sectionsColors !== undefined && config.sectionsColors.length !== config.sectionsCount) {
+      throw new RangeError('The sectionsColors length must match the sectionsCount');
+    }
+
     this._animationDelay = config.animationDelay || CONSTANTS.NEEDLE_ANIMATION_DELAY;
     this._animationDuration = config.animationDuration || CONSTANTS.NEEDLE_ANIMATION_DURATION;
     this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
@@ -181,8 +191,12 @@ export class SimpleGauge {
     this._needleRadius = (config.needleRadius !== undefined) ? config.needleRadius : CONSTANTS.NEEDLE_RADIUS;
     this._sectionsCount = config.sectionsCount;
     this._width = config.width;
+    this._sectionsColors = config.sectionsColors;
+    this._needleColor = config.needleColor;
+
     this.interval = config.interval || [0, 1];
     this.percent = (config.percent !== undefined) ? config.percent : 0;
+
     this._initialize();
   }
 
@@ -271,6 +285,7 @@ export class SimpleGauge {
       .enter()
       .append('path')
       .attr('class', sectionIndex => `arc chart-color${sectionIndex}`)
+      .attr('fill', sectionIndex => this._sectionsColors ? this._sectionsColors[sectionIndex - 1] : null)
       .attr('d', sectionIndex => {
         const arcStartRad = percToRad(totalPercent);
         const arcEndRad = arcStartRad + percToRad(sectionPercentage);
@@ -293,7 +308,8 @@ export class SimpleGauge {
       el: this._chart,
       length: this._height * 0.5,
       percent: this._percent,
-      radius: this._needleRadius
+      radius: this._needleRadius,
+      color: this._needleColor
     });
     this._update();
   }

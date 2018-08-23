@@ -12,7 +12,6 @@
     div {
       margin-bottom: 2em;
     }
-
   </style>
 </head>
 <body>
@@ -45,8 +44,12 @@
     percent: 0.5,               // The initial percentage of he needle (optional)
     sectionsCount: 3,           // The number of sections in the gauge
     width: 400,                 // The width of the gauge,
-    sectionsColors: ['green', 'orange', 'red'], // The color of each section
-    needleColor : 'blue'        // The needle color
+    sectionsColors: [           // The color of each section
+      'green',
+      'orange',
+      'red'
+    ],
+    needleColor : 'black'       // The needle color
   });
 
   d3.select('button')

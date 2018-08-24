@@ -1,5 +1,6 @@
 D3 Simple Gauge
 ===============
+[![Build Status](https://travis-ci.org/antoinebeland/d3-simple-gauge.svg?branch=master)](https://travis-ci.org/antoinebeland/d3-simple-gauge)
 
 A simple gauge written with D3.js that can be easily included in a project.
 

@@ -102,9 +102,6 @@
     function Needle(config) {
       _classCallCheck(this, Needle);
 
-      if (!config.el) {
-        throw new Error('The element must be valid.');
-      }
       this._animationDelay = config.animationDelay;
       this._animationDuration = config.animationDuration;
       this._color = config.color;
@@ -207,7 +204,7 @@
         throw new RangeError('The height must be a positive number.');
       }
       if (isNaN(config.sectionsCount) || config.sectionsCount <= 0) {
-        throw new RangeError('The sections count must be a positive number');
+        throw new RangeError('The sections count must be a positive number.');
       }
       if (isNaN(config.width) || config.width <= 0) {
         throw new RangeError('The width must be a positive number.');
@@ -219,7 +216,7 @@
         throw new RangeError('The transition duration must be greater or equal to 0.');
       }
       if (config.barWidth !== undefined && (isNaN(config.barWidth) || config.barWidth <= 0)) {
-        throw new RangeError('The bar width must be a positive number');
+        throw new RangeError('The bar width must be a positive number.');
       }
       if (config.needleRadius !== undefined && (isNaN(config.needleRadius) || config.needleRadius < 0)) {
         throw new RangeError('The needle radius must be greater or equal to 0.');
@@ -322,7 +319,7 @@
           return;
         }
         this._arcs.classed('active', function (d, i) {
-          return i === Math.floor(_this2._percent * _this2._sectionsCount);
+          return i === Math.floor(_this2._percent * _this2._sectionsCount) || i === _this2._arcs.size() - 1 && _this2._percent === 1;
         });
         this._chart.classed('min', this._percent === 0);
         this._chart.classed('max', this._percent === 1);
@@ -387,7 +384,7 @@
       key: 'value',
       set: function set(value) {
         if (isNaN(value)) {
-          throw new Error('The specified value must be a number');
+          throw new Error('The specified value must be a number.');
         }
         this.percent = this._scale(value);
       }

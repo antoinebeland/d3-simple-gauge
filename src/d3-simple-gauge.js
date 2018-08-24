@@ -42,9 +42,6 @@ class Needle {
    * @param config.radius               The radius of the needle.
    */
   constructor(config) {
-    if (!config.el) {
-      throw new Error('The element must be valid.');
-    }
     this._animationDelay = config.animationDelay;
     this._animationDuration = config.animationDuration;
     this._color = config.color;
@@ -165,7 +162,7 @@ export class SimpleGauge {
       throw new RangeError('The height must be a positive number.');
     }
     if (isNaN(config.sectionsCount) || config.sectionsCount <= 0) {
-      throw new RangeError('The sections count must be a positive number');
+      throw new RangeError('The sections count must be a positive number.');
     }
     if (isNaN(config.width) || config.width <= 0) {
       throw new RangeError('The width must be a positive number.');
@@ -179,7 +176,7 @@ export class SimpleGauge {
       throw new RangeError('The transition duration must be greater or equal to 0.');
     }
     if (config.barWidth !== undefined && (isNaN(config.barWidth) || config.barWidth <= 0)) {
-      throw new RangeError('The bar width must be a positive number');
+      throw new RangeError('The bar width must be a positive number.');
     }
     if (config.needleRadius !== undefined && (isNaN(config.needleRadius) || config.needleRadius < 0)) {
       throw new RangeError('The needle radius must be greater or equal to 0.');
@@ -265,7 +262,7 @@ export class SimpleGauge {
    */
   set value(value) {
     if (isNaN(value)) {
-      throw new Error('The specified value must be a number');
+      throw new Error('The specified value must be a number.');
     }
     this.percent = this._scale(value);
   }
@@ -333,7 +330,8 @@ export class SimpleGauge {
     if (!this._arcs) {
       return;
     }
-    this._arcs.classed('active', (d, i) => i === Math.floor(this._percent * this._sectionsCount));
+    this._arcs.classed('active', (d, i) => i === Math.floor(this._percent * this._sectionsCount) ||
+      i === this._arcs.size() - 1 && this._percent === 1);
     this._chart.classed('min', this._percent === 0);
     this._chart.classed('max', this._percent === 1);
   }

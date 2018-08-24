@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
 const pump = require('pump');
 const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
 
 /**
  * Dist Task

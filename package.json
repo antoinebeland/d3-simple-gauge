@@ -4,7 +4,8 @@
   "description": "A simple gauge written with D3.js",
   "main": "dist/d3-simple-gauge.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -28,10 +29,15 @@
     "babel-core": "^6.26.3",
     "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
     "babel-preset-env": "^1.7.0",
+    "chai": "^4.1.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-rename": "^1.4.0",
     "gulp-uglify": "^3.0.1",
-    "pump": "^3.0.0"
+    "jsdom": "^12.0.0",
+    "mocha": "^5.2.0",
+    "pump": "^3.0.0",
+    "random-number": "0.0.9",
+    "should": "^13.2.3"
   }
 }

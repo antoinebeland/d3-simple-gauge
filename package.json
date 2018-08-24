@@ -5,7 +5,7 @@
   "main": "dist/d3-simple-gauge.js",
   "scripts": {
     "start": "gulp",
-    "test": "mocha"
+    "test": "gulp dist && mocha"
   },
   "repository": {
     "type": "git",

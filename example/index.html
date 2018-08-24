@@ -2,61 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Example | D3 Simple Gauge</title>
+  <title>Examples | D3 Simple Gauge</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
       font-family: 'Arial', sans-serif;
       text-align: center;
     }
 
-    div {
-      margin-bottom: 2em;
+    a {
+      color: #00f;
+      text-decoration: none;
+    }
+
+    ul {
+      display: flex;
+      padding: 0;
+      list-style: none;
+      justify-content: center;
+    }
+
+    ul > li {
+      padding: 0 10px;
+      cursor: pointer;
+    }
+
+    ul > li:not(:last-child) {
+      border-right: 1px solid #333;
+    }
+
+    iframe {
+      width: 100%;
+      height: 450px;
+      border: 0;
+    }
+
+    .active {
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-<article>
-  <h1>D3 Simple Gauge</h1>
-  <div>
-    <p>
-      Needle position: <strong id="position">50%</strong>
-    </p>
-    <button>Change</button>
-  </div>
-</article>
+<header>
+  <ul>
+    <li>
+      <a class="active" href="example-1.html">
+        Example 1
+      </a>
+    </li>
+    <li>
+      <a href="example-2.html">
+        Example 2
+      </a>
+    </li>
+  </ul>
+</header>
+<main>
+  <iframe src="./example-1.html"></iframe>
+</main>
 <script type="text/javascript" src="../node_modules/d3/dist/d3.min.js"></script>
-<script type="text/javascript" src="../dist/d3-simple-gauge.js"></script>
 <script>
-  const svg = d3.select('body > article')
-    .append('svg')
-    .attr('width', 400)
-    .attr('height', 250);
+  const exampleItems = d3.selectAll('header a');
+  exampleItems.on('click', function() {
+    d3.event.preventDefault();
+    exampleItems.classed('active', false);
 
-  const simpleGauge = new window.d3SimpleGauge.SimpleGauge({
-    animationDelay: 0,          // The delay in ms before to play the needle animation (optional)
-    animationDuration: 3000,    // The duration in ms of the needle animation (optional)
-    barWidth: 40,               // The bar width of the gauge (optional)
-    easeType: d3.easeElastic,   // The ease type to use with the needle animation (optional)
-    el: svg.append('g'),        // The element that hosts the gauge
-    height: 200,                // The height of the gauge
-    interval: [0, 200],         // The interval (min and max values) of the gauge (optional)
-    needleRadius: 15,           // The radius of the needle (optional)
-    percent: 0.5,               // The initial percentage of he needle (optional)
-    sectionsCount: 3,           // The number of sections in the gauge
-    width: 400,                 // The width of the gauge,
-    sectionsColors: [           // The color of each section
-      'green',
-      'orange',
-      'red'
-    ],
-    needleColor : 'black'       // The needle color
+    const current = d3.select(this);
+    current.classed('active', true);
+    d3.select('iframe').attr('src', current.attr('href'));
   });
-
-  d3.select('button')
-    .on('click', () => {
-      simpleGauge.percent = Math.random();
-      d3.select('#position').text(d3.format(".0%")(simpleGauge.percent));
-    });
 </script>
 </body>
 </html>

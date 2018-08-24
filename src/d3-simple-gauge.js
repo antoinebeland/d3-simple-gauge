@@ -185,8 +185,14 @@ export class SimpleGauge {
       throw new RangeError('The sectionsColors length must match with the sectionsCount.');
     }
 
-    this._animationDelay = config.animationDelay || CONSTANTS.NEEDLE_ANIMATION_DELAY;
-    this._animationDuration = config.animationDuration || CONSTANTS.NEEDLE_ANIMATION_DURATION;
+    this._animationDelay = (config.animationDelay !== undefined)
+      ? config.animationDelay
+      : CONSTANTS.NEEDLE_ANIMATION_DELAY;
+
+    this._animationDuration = (config.animationDuration !== undefined)
+      ? config.animationDuration
+      : CONSTANTS.NEEDLE_ANIMATION_DURATION;
+
     this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
     this._easeType = config.easeType || CONSTANTS.EASE_TYPE;
     this._el = config.el;

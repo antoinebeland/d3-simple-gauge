@@ -45,9 +45,13 @@ describe('SimpleGauge', () => {
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
         width: getPositiveNumber(),
-        animationDelay: getPositiveOrZeroNumber()
+        animationDelay: getPositiveNumber()
       };
-      const simpleGauge = new SimpleGauge(config);
+      let simpleGauge = new SimpleGauge(config);
+      simpleGauge._animationDelay.should.be.equal(config.animationDelay);
+
+      config.animationDelay = 0;
+      simpleGauge = new SimpleGauge(config);
       simpleGauge._animationDelay.should.be.equal(config.animationDelay);
     });
 
@@ -57,9 +61,13 @@ describe('SimpleGauge', () => {
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
         width: getPositiveNumber(),
-        animationDuration: getPositiveOrZeroNumber()
+        animationDuration: getPositiveNumber()
       };
-      const simpleGauge = new SimpleGauge(config);
+      let simpleGauge = new SimpleGauge(config);
+      simpleGauge._animationDuration.should.be.equal(config.animationDuration);
+
+      config.animationDuration = 0;
+      simpleGauge = new SimpleGauge(config);
       simpleGauge._animationDuration.should.be.equal(config.animationDuration);
     });
 

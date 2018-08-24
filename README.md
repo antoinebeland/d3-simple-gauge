@@ -1,6 +1,7 @@
 D3 Simple Gauge
 ===============
 [![Build Status](https://travis-ci.org/antoinebeland/d3-simple-gauge.svg?branch=master)](https://travis-ci.org/antoinebeland/d3-simple-gauge)
+![Dependencies Status](https://img.shields.io/david/antoinebeland/d3-simple-gauge.svg)
 [![npm version](https://badge.fury.io/js/d3-simple-gauge.svg)](https://badge.fury.io/js/d3-simple-gauge)
 
 A simple gauge written with D3.js that can be easily included in a project.

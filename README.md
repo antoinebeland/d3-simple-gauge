@@ -87,6 +87,7 @@ There are only four required parameters when you create a gauge. The others are 
 | `[sectionsColors]`    | An array that contains the color to apply for each section.                               |
 | `sectionsCount`       | The number of sections in the gauge.                                                      |
 | `width`               | The width of the gauge.                                                                   |
+| `[chartInset]`        | The inset (margins) of the gauge inside the svg container. By default the value is `10`   |
 
 ### Properties
 Once the gauge is initialized, you can use the following properties to manipulate it.

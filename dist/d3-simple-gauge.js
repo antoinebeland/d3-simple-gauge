@@ -229,6 +229,8 @@
 
       this._animationDuration = config.animationDuration !== undefined ? config.animationDuration : CONSTANTS.NEEDLE_ANIMATION_DURATION;
 
+      this._chartInset = config.chartInset !== undefined ? config.chartInset : CONSTANTS.CHAR_INSET;
+
       this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
       this._easeType = config.easeType || CONSTANTS.EASE_TYPE;
       this._el = config.el;
@@ -266,7 +268,6 @@
 
         var sectionPercentage = 1 / this._sectionsCount / 2;
         var padRad = CONSTANTS.PAD_RAD;
-        var chartInset = CONSTANTS.CHAR_INSET;
 
         var totalPercent = 0.75; // Start at 270deg
         var radius = Math.min(this._width, this._height * 2) / 2;
@@ -282,7 +283,7 @@
 
           var startPadRad = sectionIndex === 0 ? 0 : padRad / 2;
           var endPadRad = sectionIndex === _this._sectionsCount ? 0 : padRad / 2;
-          var arc = d3.arc().outerRadius(radius - chartInset).innerRadius(radius - chartInset - _this._barWidth).startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad);
+          var arc = d3.arc().outerRadius(radius - _this._chartInset).innerRadius(radius - _this._chartInset - _this._barWidth).startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad);
 
           return arc(_this);
         });

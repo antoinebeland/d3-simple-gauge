@@ -193,6 +193,10 @@ export class SimpleGauge {
       ? config.animationDuration
       : CONSTANTS.NEEDLE_ANIMATION_DURATION;
 
+    this._chartInset = (config.chartInset !== undefined)
+      ? config.chartInset
+      : CONSTANTS.CHAR_INSET;
+
     this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
     this._easeType = config.easeType || CONSTANTS.EASE_TYPE;
     this._el = config.el;
@@ -281,7 +285,6 @@ export class SimpleGauge {
   _initialize() {
     const sectionPercentage = 1 / this._sectionsCount / 2;
     const padRad = CONSTANTS.PAD_RAD;
-    const chartInset = CONSTANTS.CHAR_INSET;
 
     let totalPercent = 0.75; // Start at 270deg
     const radius = Math.min(this._width, this._height * 2) / 2;
@@ -302,8 +305,8 @@ export class SimpleGauge {
         const startPadRad = sectionIndex === 0 ? 0 : padRad / 2;
         const endPadRad = sectionIndex === this._sectionsCount ? 0 : padRad / 2;
         const arc = d3.arc()
-          .outerRadius(radius - chartInset)
-          .innerRadius(radius - chartInset - this._barWidth)
+          .outerRadius(radius - this._chartInset)
+          .innerRadius(radius - this._chartInset - this._barWidth)
           .startAngle(arcStartRad + startPadRad)
           .endAngle(arcEndRad - endPadRad);
 

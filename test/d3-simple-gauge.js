@@ -71,6 +71,23 @@ describe('SimpleGauge', () => {
       simpleGauge._animationDuration.should.be.equal(config.animationDuration);
     });
 
+    it('should initialize the gauge correctly when a valid chartInset is specified', () => {
+      const config = {
+        el:  getRootElement(),
+        height: getPositiveNumber(),
+        sectionsCount: getSmallPositiveNumber(),
+        width: getPositiveNumber(),
+        animationDuration: getPositiveNumber(),
+      };
+
+      config.chartInset = config.width * 0.1;
+
+      let simpleGauge = new SimpleGauge(config);
+      simpleGauge._chartInset.should.be.equal(config.chartInset);
+
+    });
+
+
     it('should initialize the gauge correctly when a valid bar width is specified', () => {
       const config = {
         el: getRootElement(),
@@ -292,6 +309,7 @@ describe('SimpleGauge', () => {
       expect(() => new SimpleGauge(config)).to.throw(RangeError,
         'The sectionsColors length must match with the sectionsCount.');
     });
+
   });
 
   // Tests for 'interval' property

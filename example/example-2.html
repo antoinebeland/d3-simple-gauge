@@ -23,6 +23,7 @@
     </p>
     <button>Change</button>
     <p><small>Colors are defined with <em>needleColor</em> and <em>sectionsColors</em> properties.</small></p>
+    <p><small>Chart inset (margin in the svg) is defined with <em>chartInset</em> property.</small></p>
   </div>
 </article>
 <script type="text/javascript" src="../node_modules/d3/dist/d3.min.js"></script>
@@ -50,7 +51,8 @@
       'orange',
       'red'
     ],
-    needleColor : 'black'       // The needle color
+    needleColor : 'black',       // The needle color,
+    chartInset : 50               // The chart inset (margin)
   });
 
   d3.select('button')

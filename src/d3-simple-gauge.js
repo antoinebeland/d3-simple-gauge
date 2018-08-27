@@ -141,6 +141,7 @@ export class SimpleGauge {
    *                                      is 0.
    * @param [config.animationDuration]    The duration in ms of the needle animation. By default, the value is 3000.
    * @param [config.barWidth]             The bar width of the gauge. By default, the value is 40.
+   * @param [config.chartInset]           The char inset to use. By default, the value is 10.
    * @param [config.easeType]             The ease type to use for the needle animation. By default, the value is
    *                                      "d3.easeElastic".
    * @param config.el                     The D3 element to use to create the gauge (must be a group or an SVG element).
@@ -178,6 +179,9 @@ export class SimpleGauge {
     if (config.barWidth !== undefined && (isNaN(config.barWidth) || config.barWidth <= 0)) {
       throw new RangeError('The bar width must be a positive number.');
     }
+    if (config.chartInset !== undefined && (isNaN(config.chartInset) || config.chartInset < 0)) {
+      throw new RangeError('The chart inset must be greater or equal to 0.');
+    }
     if (config.needleRadius !== undefined && (isNaN(config.needleRadius) || config.needleRadius < 0)) {
       throw new RangeError('The needle radius must be greater or equal to 0.');
     }
@@ -192,6 +196,10 @@ export class SimpleGauge {
     this._animationDuration = (config.animationDuration !== undefined)
       ? config.animationDuration
       : CONSTANTS.NEEDLE_ANIMATION_DURATION;
+
+    this._chartInset = (config.chartInset !== undefined)
+      ? config.chartInset
+      : CONSTANTS.CHAR_INSET;
 
     this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
     this._easeType = config.easeType || CONSTANTS.EASE_TYPE;
@@ -281,7 +289,6 @@ export class SimpleGauge {
   _initialize() {
     const sectionPercentage = 1 / this._sectionsCount / 2;
     const padRad = CONSTANTS.PAD_RAD;
-    const chartInset = CONSTANTS.CHAR_INSET;
 
     let totalPercent = 0.75; // Start at 270deg
     const radius = Math.min(this._width, this._height * 2) / 2;
@@ -302,8 +309,8 @@ export class SimpleGauge {
         const startPadRad = sectionIndex === 0 ? 0 : padRad / 2;
         const endPadRad = sectionIndex === this._sectionsCount ? 0 : padRad / 2;
         const arc = d3.arc()
-          .outerRadius(radius - chartInset)
-          .innerRadius(radius - chartInset - this._barWidth)
+          .outerRadius(radius - this._chartInset)
+          .innerRadius(radius - this._chartInset - this._barWidth)
           .startAngle(arcStartRad + startPadRad)
           .endAngle(arcEndRad - endPadRad);
 

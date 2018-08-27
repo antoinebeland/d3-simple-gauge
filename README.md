@@ -77,6 +77,7 @@ There are only four required parameters when you create a gauge. The others are 
 | `[animationDelay]`    | The delay in ms before to start the needle animation. By default, the value is `0`.       |
 | `[animationDuration]` | The duration in ms of the needle animation. By default, the value is `3000`.              |
 | `[barWidth]`          | The bar width of the gauge. By default, the value is `40`.                                |
+| `[chartInset]`        | The inset (margins) of the gauge inside the SVG container. By default the value is `10`.  |
 | `[easeType]`          | The ease type to use for the needle animation. By default, the value is `d3.easeElastic`. |
 | `el`                  | The D3 element to use to create the gauge (must be a group or an SVG element).            |
 | `height`              | The height of the gauge.                                                                  |

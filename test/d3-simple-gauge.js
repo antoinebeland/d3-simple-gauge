@@ -71,23 +71,6 @@ describe('SimpleGauge', () => {
       simpleGauge._animationDuration.should.be.equal(config.animationDuration);
     });
 
-    it('should initialize the gauge correctly when a valid chartInset is specified', () => {
-      const config = {
-        el:  getRootElement(),
-        height: getPositiveNumber(),
-        sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        animationDuration: getPositiveNumber(),
-      };
-
-      config.chartInset = config.width * 0.1;
-
-      let simpleGauge = new SimpleGauge(config);
-      simpleGauge._chartInset.should.be.equal(config.chartInset);
-
-    });
-
-
     it('should initialize the gauge correctly when a valid bar width is specified', () => {
       const config = {
         el: getRootElement(),
@@ -98,6 +81,20 @@ describe('SimpleGauge', () => {
       };
       const simpleGauge = new SimpleGauge(config);
       simpleGauge._barWidth.should.be.equal(config.barWidth);
+    });
+
+    it('should initialize the gauge correctly when a valid chart inset is specified', () => {
+      const config = {
+        el:  getRootElement(),
+        height: getPositiveNumber(),
+        sectionsCount: getSmallPositiveNumber(),
+        width: getPositiveNumber(),
+        animationDuration: getPositiveNumber(),
+      };
+      config.chartInset = config.width * 0.1;
+
+      let simpleGauge = new SimpleGauge(config);
+      simpleGauge._chartInset.should.be.equal(config.chartInset);
     });
 
     it('should initialize the gauge correctly when a valid ease type is specified', () => {
@@ -279,6 +276,20 @@ describe('SimpleGauge', () => {
 
       config.barWidth = getNegativeOrZeroNumber();
       expect(() => new SimpleGauge(config)).to.throw(RangeError, 'The bar width must be a positive number.');
+    });
+
+    it('should throw an exception when the chart inset specified is invalid', () => {
+      const config = {
+        el: getRootElement(),
+        height: getPositiveNumber(),
+        sectionsCount: getSmallPositiveNumber(),
+        width: getPositiveNumber(),
+        chartInset: 'invalid'
+      };
+      expect(() => new SimpleGauge(config)).to.throw(RangeError, 'The chart inset must be greater or equal to 0.');
+
+      config.chartInset = getNegativeNumber();
+      expect(() => new SimpleGauge(config)).to.throw(RangeError, 'The chart inset must be greater or equal to 0.');
     });
 
     it('should throw an exception when the needle radius specified is invalid', () => {

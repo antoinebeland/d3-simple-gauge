@@ -1,41 +1,22 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', 'd3'], factory);
+    define(['exports', 'd3-array', 'd3-ease', 'd3-scale', 'd3-selection', 'd3-shape', 'd3-transition'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('d3'));
+    factory(exports, require('d3-array'), require('d3-ease'), require('d3-scale'), require('d3-selection'), require('d3-shape'), require('d3-transition'));
   } else {
     var mod = {
       exports: {}
     };
-    factory(mod.exports, global.d3);
+    factory(mod.exports, global.d3, global.d3, global.d3, global.d3, global.d3, global.d3);
     global.d3SimpleGauge = mod.exports;
   }
-})(this, function (exports, _d) {
+})(this, function (exports, _d3Array, _d3Ease, _d3Scale, _d3Selection, _d3Shape) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.SimpleGauge = undefined;
-
-  var d3 = _interopRequireWildcard(_d);
-
-  function _interopRequireWildcard(obj) {
-    if (obj && obj.__esModule) {
-      return obj;
-    } else {
-      var newObj = {};
-
-      if (obj != null) {
-        for (var key in obj) {
-          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
-        }
-      }
-
-      newObj.default = obj;
-      return newObj;
-    }
-  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -62,9 +43,9 @@
   }();
 
   var CONSTANTS = {
-    CHAR_INSET: 10,
     BAR_WIDTH: 40,
-    EASE_TYPE: d3.easeElastic,
+    CHAR_INSET: 10,
+    EASE_TYPE: _d3Ease.easeElastic,
     NEEDLE_ANIMATION_DELAY: 0,
     NEEDLE_ANIMATION_DURATION: 3000,
     NEEDLE_RADIUS: 15,
@@ -130,7 +111,7 @@
           var initialPercent = self._percent;
           return function (progressPercent) {
             self._percent = initialPercent + progressPercent * delta;
-            return d3.select(thisElement).attr('d', self._getPath(self._percent));
+            return (0, _d3Selection.select)(thisElement).attr('d', self._getPath(self._percent));
           };
         });
       }
@@ -278,7 +259,7 @@
 
         this._chart = this._el.append('g').attr('transform', 'translate(' + this._width / 2 + ', ' + this._height + ')');
 
-        this._arcs = this._chart.selectAll('.arc').data(d3.range(1, this._sectionsCount + 1)).enter().append('path').attr('class', function (sectionIndex) {
+        this._arcs = this._chart.selectAll('.arc').data((0, _d3Array.range)(1, this._sectionsCount + 1)).enter().append('path').attr('class', function (sectionIndex) {
           return 'arc chart-color' + sectionIndex;
         }).attr('d', function (sectionIndex) {
           var arcStartRad = percToRad(totalPercent);
@@ -287,7 +268,7 @@
 
           var startPadRad = sectionIndex === 0 ? 0 : padRad / 2;
           var endPadRad = sectionIndex === _this._sectionsCount ? 0 : padRad / 2;
-          var arc = d3.arc().outerRadius(radius - _this._chartInset).innerRadius(radius - _this._chartInset - _this._barWidth).startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad);
+          var arc = (0, _d3Shape.arc)().outerRadius(radius - _this._chartInset).innerRadius(radius - _this._chartInset - _this._barWidth).startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad);
 
           return arc(_this);
         });
@@ -347,7 +328,7 @@
         if (!(interval instanceof Array) || interval.length !== 2 || isNaN(interval[0]) || isNaN(interval[1]) || interval[0] > interval[1]) {
           throw new Error('The interval specified is invalid.');
         }
-        this._scale = d3.scaleLinear().domain(interval).range([0, 1]).clamp(true);
+        this._scale = (0, _d3Scale.scaleLinear)().domain(interval).range([0, 1]).clamp(true);
       }
 
       /**

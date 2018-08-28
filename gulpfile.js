@@ -14,7 +14,18 @@ gulp.task('dist', cb => {
       gulp.src('./src/*.js'),
       babel({
         presets: ['env'],
-        plugins: ["transform-es2015-modules-umd"]
+        plugins: [
+          ['transform-es2015-modules-umd', {
+            'globals': {
+              'd3-array': 'd3',
+              'd3-ease': 'd3',
+              'd3-scale': 'd3',
+              'd3-selection': 'd3',
+              'd3-shape': 'd3',
+              'd3-transition': 'd3'
+            }
+          }]
+        ]
       }),
       gulp.dest('dist'),
       uglify(),

@@ -1,9 +1,10 @@
 require('should');
 const chai = require("chai");
-const d3 = require("d3");
 const expect = chai.expect;
+const d3Ease = require('d3-ease');
 const jsdom = require("jsdom");
 const rn = require('random-number');
+const select = require("d3-selection").select;
 const SimpleGauge = require('../dist/d3-simple-gauge').SimpleGauge;
 
 // Tests for the SimpleGauge class
@@ -28,7 +29,7 @@ describe('SimpleGauge', () => {
       simpleGauge._animationDelay.should.be.equal(0);
       simpleGauge._animationDuration.should.be.equal(3000);
       simpleGauge._barWidth.should.be.equal(40);
-      simpleGauge._easeType.should.be.equal(d3.easeElastic);
+      simpleGauge._easeType.should.be.equal(d3Ease.easeElastic);
       simpleGauge._needleRadius.should.be.equal(15);
       expect(simpleGauge._sectionsColors).to.be.undefined;
       expect(simpleGauge._needleColor).to.be.undefined;
@@ -103,7 +104,7 @@ describe('SimpleGauge', () => {
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
         width: getPositiveNumber(),
-        easeType: d3.easeLinear
+        easeType: d3Ease.easeLinear
       };
       const simpleGauge = new SimpleGauge(config);
       simpleGauge._easeType.should.be.equal(config.easeType);
@@ -179,7 +180,7 @@ describe('SimpleGauge', () => {
 
       rootElement.selectAll('.arc')
         .each(function(d, i) {
-          d3.select(this).style('fill').should.be.equal(config.sectionsColors[i])
+          select(this).style('fill').should.be.equal(config.sectionsColors[i])
         });
     });
 
@@ -369,7 +370,7 @@ describe('SimpleGauge', () => {
 
       function validateActiveClass(index) {
         rootElement.selectAll('.arc').each(function(d, i) {
-          const currentClass = d3.select(this).attr('class');
+          const currentClass = select(this).attr('class');
           if (i === index) {
             expect(currentClass).to.include('active');
           } else {
@@ -515,5 +516,5 @@ const getSmallPositiveNumber = rn.generator({
  */
 function getRootElement() {
   const dom = new jsdom.JSDOM(`<!DOCTYPE html><svg></svg>`);
-  return d3.select(dom.window.document.querySelector('svg'));
+  return select(dom.window.document.querySelector('svg'));
 }

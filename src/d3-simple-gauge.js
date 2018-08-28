@@ -1,4 +1,6 @@
 /**
+ * d3-simple-gauge.js | MIT license
+ *
  * The code is based on this example (https://codepen.io/anon/pen/WKyXgr)
  * on CodePen and on this tutorial (https://jaketrent.com/post/rotate-gauge-needle-in-d3/).
  *
@@ -8,12 +10,17 @@
  * Thanks to the original author for its work.
  */
 
-import * as d3 from 'd3';
+import { range } from 'd3-array';
+import { easeElastic } from 'd3-ease';
+import { scaleLinear } from 'd3-scale';
+import { select } from 'd3-selection';
+import { arc as d3Arc } from 'd3-shape';
+import 'd3-transition';
 
 const CONSTANTS = {
-  CHAR_INSET: 10,
   BAR_WIDTH: 40,
-  EASE_TYPE: d3.easeElastic,
+  CHAR_INSET: 10,
+  EASE_TYPE: easeElastic,
   NEEDLE_ANIMATION_DELAY: 0,
   NEEDLE_ANIMATION_DURATION: 3000,
   NEEDLE_RADIUS: 15,
@@ -71,7 +78,7 @@ class Needle {
         const initialPercent = self._percent;
         return function (progressPercent) {
           self._percent = initialPercent + progressPercent * delta;
-          return d3.select(thisElement)
+          return select(thisElement)
             .attr('d', self._getPath(self._percent));
         }
       });
@@ -236,7 +243,7 @@ export class SimpleGauge {
       isNaN(interval[0]) ||isNaN(interval[1]) || interval[0] > interval[1]) {
       throw new Error('The interval specified is invalid.');
     }
-    this._scale = d3.scaleLinear()
+    this._scale = scaleLinear()
       .domain(interval)
       .range([0, 1])
       .clamp(true);
@@ -297,7 +304,7 @@ export class SimpleGauge {
       .attr('transform', `translate(${this._width / 2}, ${this._height})`);
 
     this._arcs = this._chart.selectAll('.arc')
-      .data(d3.range(1, this._sectionsCount + 1))
+      .data(range(1, this._sectionsCount + 1))
       .enter()
       .append('path')
       .attr('class', sectionIndex => `arc chart-color${sectionIndex}`)
@@ -308,7 +315,7 @@ export class SimpleGauge {
 
         const startPadRad = sectionIndex === 0 ? 0 : padRad / 2;
         const endPadRad = sectionIndex === this._sectionsCount ? 0 : padRad / 2;
-        const arc = d3.arc()
+        const arc = d3Arc()
           .outerRadius(radius - this._chartInset)
           .innerRadius(radius - this._chartInset - this._barWidth)
           .startAngle(arcStartRad + startPadRad)

@@ -10,12 +10,12 @@
  * Thanks to the original author for its work.
  */
 
-import { range } from 'd3-array';
+import 'd3-transition';
+import { arc as d3Arc } from 'd3-shape';
 import { easeElastic } from 'd3-ease';
+import { range } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
 import { select } from 'd3-selection';
-import { arc as d3Arc } from 'd3-shape';
-import 'd3-transition';
 
 const CONSTANTS = {
   BAR_WIDTH: 40,
@@ -331,12 +331,12 @@ export class SimpleGauge {
     this._needle = new Needle({
       animationDelay: this._animationDelay,
       animationDuration: this._animationDuration,
+      color: this._needleColor,
       easeType: this._easeType,
       el: this._chart,
       length: this._height * 0.5,
       percent: this._percent,
-      radius: this._needleRadius,
-      color: this._needleColor
+      radius: this._needleRadius
     });
     this._update();
   }

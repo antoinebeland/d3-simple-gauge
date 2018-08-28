@@ -42,11 +42,11 @@ describe('SimpleGauge', () => {
 
     it('should initialize the gauge correctly when a valid animation delay is specified', () => {
       const config = {
+        animationDelay: getPositiveNumber(),
         el: getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        animationDelay: getPositiveNumber()
+        width: getPositiveNumber()
       };
       let simpleGauge = new SimpleGauge(config);
       simpleGauge._animationDelay.should.be.equal(config.animationDelay);
@@ -58,11 +58,11 @@ describe('SimpleGauge', () => {
 
     it('should initialize the gauge correctly when a valid animation duration is specified', () => {
       const config = {
+        animationDuration: getPositiveNumber(),
         el:  getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        animationDuration: getPositiveNumber()
+        width: getPositiveNumber()
       };
       let simpleGauge = new SimpleGauge(config);
       simpleGauge._animationDuration.should.be.equal(config.animationDuration);
@@ -74,11 +74,11 @@ describe('SimpleGauge', () => {
 
     it('should initialize the gauge correctly when a valid bar width is specified', () => {
       const config = {
+        barWidth: getPositiveNumber(),
         el: getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        barWidth: getPositiveNumber()
+        width: getPositiveNumber()
       };
       const simpleGauge = new SimpleGauge(config);
       simpleGauge._barWidth.should.be.equal(config.barWidth);
@@ -86,25 +86,25 @@ describe('SimpleGauge', () => {
 
     it('should initialize the gauge correctly when a valid chart inset is specified', () => {
       const config = {
+        animationDuration: getPositiveNumber(),
         el:  getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        animationDuration: getPositiveNumber(),
+        width: getPositiveNumber()
       };
       config.chartInset = config.width * 0.1;
 
-      let simpleGauge = new SimpleGauge(config);
+      const simpleGauge = new SimpleGauge(config);
       simpleGauge._chartInset.should.be.equal(config.chartInset);
     });
 
     it('should initialize the gauge correctly when a valid ease type is specified', () => {
       const config = {
+        easeType: d3Ease.easeLinear,
         el: getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        easeType: d3Ease.easeLinear
+        width: getPositiveNumber()
       };
       const simpleGauge = new SimpleGauge(config);
       simpleGauge._easeType.should.be.equal(config.easeType);
@@ -114,9 +114,9 @@ describe('SimpleGauge', () => {
       const config = {
         el: getRootElement(),
         height: getPositiveNumber(),
+        interval: [0, getPositiveNumber()],
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        interval: [0, getPositiveNumber()]
+        width: getPositiveNumber()
       };
       const simpleGauge = new SimpleGauge(config);
       expect(simpleGauge.interval).to.eql(config.interval)
@@ -127,9 +127,9 @@ describe('SimpleGauge', () => {
       const config = {
         el: rootElement,
         height: getPositiveNumber(),
+        needleColor: '#f00',
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        needleColor: '#f00'
+        width: getPositiveNumber()
       };
       const simpleGauge = new SimpleGauge(config);
       simpleGauge._needleColor.should.be.equal(config.needleColor);
@@ -142,9 +142,9 @@ describe('SimpleGauge', () => {
       const config = {
         el: getRootElement(),
         height: getPositiveNumber(),
+        needleRadius: getPositiveOrZeroNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        needleRadius: getPositiveOrZeroNumber()
+        width: getPositiveNumber()
       };
       const simpleGauge = new SimpleGauge(config);
       simpleGauge._needleRadius.should.be.equal(config.needleRadius);
@@ -154,9 +154,9 @@ describe('SimpleGauge', () => {
       const config = {
         el: getRootElement(),
         height: getPositiveNumber(),
+        percent: Math.random(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        percent: Math.random()
+        width: getPositiveNumber()
       };
       const simpleGauge = new SimpleGauge(config);
       simpleGauge.percent.should.be.equal(config.percent);
@@ -167,13 +167,13 @@ describe('SimpleGauge', () => {
       const config = {
         el: rootElement,
         height: getPositiveNumber(),
-        sectionsCount: 3,
-        width: getPositiveNumber(),
         sectionsColors: [
           '#f00',
           '#0f0',
           '#00f'
-        ]
+        ],
+        sectionsCount: 3,
+        width: getPositiveNumber()
       };
       const simpleGauge = new SimpleGauge(config);
       expect(simpleGauge._sectionsColors).to.eql(config.sectionsColors);
@@ -235,11 +235,11 @@ describe('SimpleGauge', () => {
 
     it('should throw an exception when the animation delay specified is invalid', () => {
       const config = {
+        animationDelay: 'invalid',
         el: getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        animationDelay: 'invalid'
+        width: getPositiveNumber()
       };
       expect(() => new SimpleGauge(config)).to.throw(RangeError,
         'The transition delay must be greater or equal to 0.');
@@ -251,11 +251,11 @@ describe('SimpleGauge', () => {
 
     it('should throw an exception when the animation duration specified is invalid', () => {
       const config = {
+        animationDuration: 'invalid',
         el: getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        animationDuration: 'invalid'
+        width: getPositiveNumber()
       };
       expect(() => new SimpleGauge(config)).to.throw(RangeError,
         'The transition duration must be greater or equal to 0.');
@@ -267,11 +267,11 @@ describe('SimpleGauge', () => {
 
     it('should throw an exception when the bar width specified is invalid', () => {
       const config = {
+        barWidth: 'invalid',
         el: getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        barWidth: 'invalid'
+        width: getPositiveNumber()
       };
       expect(() => new SimpleGauge(config)).to.throw(RangeError, 'The bar width must be a positive number.');
 
@@ -281,11 +281,11 @@ describe('SimpleGauge', () => {
 
     it('should throw an exception when the chart inset specified is invalid', () => {
       const config = {
+        chartInset: 'invalid',
         el: getRootElement(),
         height: getPositiveNumber(),
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        chartInset: 'invalid'
+        width: getPositiveNumber()
       };
       expect(() => new SimpleGauge(config)).to.throw(RangeError, 'The chart inset must be greater or equal to 0.');
 
@@ -297,9 +297,9 @@ describe('SimpleGauge', () => {
       const config = {
         el: getRootElement(),
         height: getPositiveNumber(),
+        needleRadius: 'invalid',
         sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
-        needleRadius: 'invalid'
+        width: getPositiveNumber()
       };
       expect(() => new SimpleGauge(config)).to.throw(RangeError, 'The needle radius must be greater or equal to 0.');
 
@@ -311,12 +311,12 @@ describe('SimpleGauge', () => {
       const config = {
         el: getRootElement(),
         height: getPositiveNumber(),
-        sectionsCount: 3,
-        width: getPositiveNumber(),
         sectionsColors: [
           'yellow',
           'red'
-        ]
+        ],
+        sectionsCount: 3,
+        width: getPositiveNumber()
       };
       expect(() => new SimpleGauge(config)).to.throw(RangeError,
         'The sectionsColors length must match with the sectionsCount.');
@@ -434,12 +434,12 @@ describe('SimpleGauge', () => {
       const config = {
         el: getRootElement(),
         height: getPositiveNumber(),
-        sectionsCount: getSmallPositiveNumber(),
-        width: getPositiveNumber(),
         interval: [
           0,
           250
-        ]
+        ],
+        sectionsCount: getSmallPositiveNumber(),
+        width: getPositiveNumber()
       };
       const simpleGauge = new SimpleGauge(config);
       simpleGauge.value = 0;
@@ -468,45 +468,45 @@ describe('SimpleGauge', () => {
  * Generates a random negative number.
  */
 const getNegativeNumber = rn.generator({
-  min: -1000,
+  integer: true,
   max: -1,
-  integer: true
+  min: -1000
 });
 
 /**
  * Generates a random negative number (including zero).
  */
 const getNegativeOrZeroNumber = rn.generator({
-  min: -1000,
+  integer: true,
   max: 0,
-  integer: true
+  min: -1000
 });
 
 /**
  * Generates a random positive number.
  */
 const getPositiveNumber = rn.generator({
-  min: 1,
+  integer: true,
   max: 1000,
-  integer: true
+  min: 1
 });
 
 /**
  * Generates a random positive number (including zero).
  */
 const getPositiveOrZeroNumber = rn.generator({
-  min: 0,
+  integer: true,
   max: 1000,
-  integer: true
+  min: 0
 });
 
 /**
  * Generates a random positive small number.
  */
 const getSmallPositiveNumber = rn.generator({
-  min: 1,
+  integer: true,
   max: 10,
-  integer: true
+  min: 1
 });
 
 /**

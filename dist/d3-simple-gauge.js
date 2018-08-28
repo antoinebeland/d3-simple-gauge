@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', 'd3-array', 'd3-ease', 'd3-scale', 'd3-selection', 'd3-shape', 'd3-transition'], factory);
+    define(['exports', 'd3-shape', 'd3-ease', 'd3-array', 'd3-scale', 'd3-selection', 'd3-transition'], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('d3-array'), require('d3-ease'), require('d3-scale'), require('d3-selection'), require('d3-shape'), require('d3-transition'));
+    factory(exports, require('d3-shape'), require('d3-ease'), require('d3-array'), require('d3-scale'), require('d3-selection'), require('d3-transition'));
   } else {
     var mod = {
       exports: {}
@@ -10,7 +10,7 @@
     factory(mod.exports, global.d3, global.d3, global.d3, global.d3, global.d3, global.d3);
     global.d3SimpleGauge = mod.exports;
   }
-})(this, function (exports, _d3Array, _d3Ease, _d3Scale, _d3Selection, _d3Shape) {
+})(this, function (exports, _d3Shape, _d3Ease, _d3Array, _d3Scale, _d3Selection) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -282,12 +282,12 @@
         this._needle = new Needle({
           animationDelay: this._animationDelay,
           animationDuration: this._animationDuration,
+          color: this._needleColor,
           easeType: this._easeType,
           el: this._chart,
           length: this._height * 0.5,
           percent: this._percent,
-          radius: this._needleRadius,
-          color: this._needleColor
+          radius: this._needleRadius
         });
         this._update();
       }

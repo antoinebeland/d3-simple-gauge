@@ -1,0 +1,35 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "max-len": ["error", { "code": 120, "tabWidth": 2 }],
+    "no-duplicate-imports": ["error", { "includeExports": true }],
+    "no-multi-spaces": "error",
+    "no-multiple-empty-lines": "error",
+    "no-var": "error",
+    "one-var": ["error", "never"],
+    "sort-keys": "error",
+    "sort-vars": "error",
+    "prefer-const": ["error", {
+      "destructuring": "any",
+      "ignoreReadBeforeAssign": false
+    }],
+    "sort-imports": ["error", {
+      "ignoreCase": false,
+      "ignoreMemberSort": false,
+      "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+    }]
+  }
+}

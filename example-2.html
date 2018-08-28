@@ -23,6 +23,7 @@
     </p>
     <button>Change</button>
     <p><small>Colors are defined with <em>needleColor</em> and <em>sectionsColors</em> properties.</small></p>
+	<p><small>Chart inset (margins in the SVG) is defined with <em>chartInset</em> property.</small></p>
   </div>
 </article>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
@@ -37,20 +38,21 @@
     animationDelay: 0,          // The delay in ms before to play the needle animation (optional)
     animationDuration: 3000,    // The duration in ms of the needle animation (optional)
     barWidth: 40,               // The bar width of the gauge (optional)
+    chartInset : 50,            // The chart inset (margin),
     easeType: d3.easeElastic,   // The ease type to use with the needle animation (optional)
     el: svg.append('g'),        // The element that hosts the gauge
     height: 200,                // The height of the gauge
     interval: [0, 200],         // The interval (min and max values) of the gauge (optional)
     needleRadius: 15,           // The radius of the needle (optional)
+    needleColor : 'black',      // The needle color,
     percent: 0.5,               // The initial percentage of he needle (optional)
-    sectionsCount: 3,           // The number of sections in the gauge
-    width: 400,                 // The width of the gauge,
     sectionsColors: [           // The color of each section
       'green',
       'orange',
       'red'
     ],
-    needleColor : 'black'       // The needle color
+    sectionsCount: 3,           // The number of sections in the gauge
+    width: 400                  // The width of the gauge,
   });
 
   d3.select('button')

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const pump = require('pump');
@@ -9,7 +10,7 @@ const uglify = require('gulp-uglify');
  * ---------
  * Creates dist version of the script.
  */
-gulp.task('dist', cb => {
+gulp.task('dist', gulp.series(cb => {
   pump([
       gulp.src('./src/*.js'),
       babel({
@@ -34,16 +35,16 @@ gulp.task('dist', cb => {
     ],
     cb
   );
-});
+}));
 
 /**
  * Default Task
  * ------------
  * Creates a watcher to watch file changes.
  */
-gulp.task('default', ['dist'], () => {
-  gulp.watch('./src/*.js', ['dist'])
+gulp.task('default', gulp.series('dist', () => {
+  gulp.watch('./src/*.js', gulp.series('dist'))
     .on('change', (event) => {
       console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
     });
-});
+}));

@@ -14,9 +14,8 @@ gulp.task('dist', gulp.series(cb => {
   pump([
       gulp.src('./src/*.js'),
       babel({
-        presets: ['env'],
         plugins: [
-          ['transform-es2015-modules-umd', {
+          ['@babel/plugin-transform-modules-umd', {
             'globals': {
               'd3-array': 'd3',
               'd3-ease': 'd3',
@@ -26,7 +25,8 @@ gulp.task('dist', gulp.series(cb => {
               'd3-transition': 'd3'
             }
           }]
-        ]
+        ],
+        presets: ['@babel/preset-env']
       }),
       gulp.dest('dist'),
       uglify(),

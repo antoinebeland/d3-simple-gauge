@@ -1,8 +1,8 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', 'd3-shape', 'd3-ease', 'd3-array', 'd3-scale', 'd3-selection', 'd3-transition'], factory);
+    define(["exports", "d3-transition", "d3-shape", "d3-ease", "d3-array", "d3-scale", "d3-selection"], factory);
   } else if (typeof exports !== "undefined") {
-    factory(exports, require('d3-shape'), require('d3-ease'), require('d3-array'), require('d3-scale'), require('d3-selection'), require('d3-transition'));
+    factory(exports, require("d3-transition"), require("d3-shape"), require("d3-ease"), require("d3-array"), require("d3-scale"), require("d3-selection"));
   } else {
     var mod = {
       exports: {}
@@ -10,37 +10,19 @@
     factory(mod.exports, global.d3, global.d3, global.d3, global.d3, global.d3, global.d3);
     global.d3SimpleGauge = mod.exports;
   }
-})(this, function (exports, _d3Shape, _d3Ease, _d3Array, _d3Scale, _d3Selection) {
-  'use strict';
+})(this, function (_exports, _d3Transition, _d3Shape, _d3Ease, _d3Array, _d3Scale, _d3Selection) {
+  "use strict";
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(_exports, "__esModule", {
     value: true
   });
-  exports.SimpleGauge = undefined;
+  _exports.SimpleGauge = void 0;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var _createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   var CONSTANTS = {
     BAR_WIDTH: 40,
@@ -55,18 +37,22 @@
   var percToDeg = function percToDeg(perc) {
     return perc * 360;
   };
+
   var degToRad = function degToRad(deg) {
     return deg * Math.PI / 180;
   };
+
   var percToRad = function percToRad(perc) {
     return degToRad(percToDeg(perc));
   };
-
   /**
    * Defines the needle used in the gauge.
    */
 
-  var Needle = function () {
+
+  var Needle =
+  /*#__PURE__*/
+  function () {
     /**
      * Initializes a new instance of the Needle class.
      *
@@ -91,9 +77,9 @@
       this._length = config.length;
       this._percent = config.percent;
       this._radius = config.radius;
+
       this._initialize();
     }
-
     /**
      * Updates the needle position based on the percentage specified.
      *
@@ -102,9 +88,10 @@
 
 
     _createClass(Needle, [{
-      key: 'update',
+      key: "update",
       value: function update(percent) {
         var self = this;
+
         this._el.transition().delay(this._animationDelay).ease(this._easeType).duration(this._animationDuration).selectAll('.needle').tween('progress', function () {
           var thisElement = this;
           var delta = percent - self._percent;
@@ -115,8 +102,14 @@
           };
         });
       }
+      /**
+       * Initializes the needle.
+       *
+       * @private
+       */
+
     }, {
-      key: '_initialize',
+      key: "_initialize",
       value: function _initialize() {
         this._el.append('circle').attr('class', 'needle-center').attr('cx', 0).attr('cy', 0).attr('r', this._radius);
 
@@ -128,32 +121,42 @@
           this._el.select('.needle').style('fill', this._color);
         }
       }
+      /**
+       * Gets the needle path based on the percent specified.
+       *
+       * @param percent       The percentage to use to create the path.
+       * @returns {string}    A string associated with the path.
+       * @private
+       */
+
     }, {
-      key: '_getPath',
+      key: "_getPath",
       value: function _getPath(percent) {
         var halfPI = Math.PI / 2;
         var thetaRad = percToRad(percent / 2); // half circle
 
         var centerX = 0;
         var centerY = 0;
-
         var topX = centerX - this._length * Math.cos(thetaRad);
         var topY = centerY - this._length * Math.sin(thetaRad);
-
         var leftX = centerX - this._radius * Math.cos(thetaRad - halfPI);
         var leftY = centerY - this._radius * Math.sin(thetaRad - halfPI);
-
         var rightX = centerX - this._radius * Math.cos(thetaRad + halfPI);
         var rightY = centerY - this._radius * Math.sin(thetaRad + halfPI);
-
-        return 'M ' + leftX + ' ' + leftY + ' L ' + topX + ' ' + topY + ' L ' + rightX + ' ' + rightY;
+        return "M ".concat(leftX, " ").concat(leftY, " L ").concat(topX, " ").concat(topY, " L ").concat(rightX, " ").concat(rightY);
       }
     }]);
 
     return Needle;
   }();
+  /**
+   * Defines a simple gauge.
+   */
 
-  var SimpleGauge = exports.SimpleGauge = function () {
+
+  var SimpleGauge =
+  /*#__PURE__*/
+  function () {
     /**
      * Initializes a new instance of the SimpleGauge class.
      *
@@ -182,40 +185,46 @@
       if (!config.el) {
         throw new Error('The element must be valid.');
       }
+
       if (isNaN(config.height) || config.height <= 0) {
         throw new RangeError('The height must be a positive number.');
       }
+
       if (isNaN(config.sectionsCount) || config.sectionsCount <= 0) {
         throw new RangeError('The sections count must be a positive number.');
       }
+
       if (isNaN(config.width) || config.width <= 0) {
         throw new RangeError('The width must be a positive number.');
       }
+
       if (config.animationDelay !== undefined && (isNaN(config.animationDelay) || config.animationDelay < 0)) {
         throw new RangeError('The transition delay must be greater or equal to 0.');
       }
+
       if (config.animationDuration !== undefined && (isNaN(config.animationDuration) || config.animationDuration < 0)) {
         throw new RangeError('The transition duration must be greater or equal to 0.');
       }
+
       if (config.barWidth !== undefined && (isNaN(config.barWidth) || config.barWidth <= 0)) {
         throw new RangeError('The bar width must be a positive number.');
       }
+
       if (config.chartInset !== undefined && (isNaN(config.chartInset) || config.chartInset < 0)) {
         throw new RangeError('The chart inset must be greater or equal to 0.');
       }
+
       if (config.needleRadius !== undefined && (isNaN(config.needleRadius) || config.needleRadius < 0)) {
         throw new RangeError('The needle radius must be greater or equal to 0.');
       }
+
       if (config.sectionsColors !== undefined && config.sectionsColors.length !== config.sectionsCount) {
         throw new RangeError('The sectionsColors length must match with the sectionsCount.');
       }
 
       this._animationDelay = config.animationDelay !== undefined ? config.animationDelay : CONSTANTS.NEEDLE_ANIMATION_DELAY;
-
       this._animationDuration = config.animationDuration !== undefined ? config.animationDuration : CONSTANTS.NEEDLE_ANIMATION_DURATION;
-
       this._chartInset = config.chartInset !== undefined ? config.chartInset : CONSTANTS.CHAR_INSET;
-
       this._barWidth = config.barWidth || CONSTANTS.BAR_WIDTH;
       this._easeType = config.easeType || CONSTANTS.EASE_TYPE;
       this._el = config.el;
@@ -225,13 +234,11 @@
       this._width = config.width;
       this._sectionsColors = config.sectionsColors;
       this._needleColor = config.needleColor;
-
       this.interval = config.interval || [0, 1];
       this.percent = config.percent !== undefined ? config.percent : 0;
 
       this._initialize();
     }
-
     /**
      * Gets the interval of the gauge.
      *
@@ -240,8 +247,7 @@
 
 
     _createClass(SimpleGauge, [{
-      key: '_initialize',
-
+      key: "_initialize",
 
       /**
        * Initializes the simple gauge.
@@ -253,23 +259,19 @@
 
         var sectionPercentage = 1 / this._sectionsCount / 2;
         var padRad = CONSTANTS.PAD_RAD;
-
         var totalPercent = 0.75; // Start at 270deg
+
         var radius = Math.min(this._width, this._height * 2) / 2;
-
-        this._chart = this._el.append('g').attr('transform', 'translate(' + this._width / 2 + ', ' + this._height + ')');
-
+        this._chart = this._el.append('g').attr('transform', "translate(".concat(this._width / 2, ", ").concat(this._height, ")"));
         this._arcs = this._chart.selectAll('.arc').data((0, _d3Array.range)(1, this._sectionsCount + 1)).enter().append('path').attr('class', function (sectionIndex) {
-          return 'arc chart-color' + sectionIndex;
+          return "arc chart-color".concat(sectionIndex);
         }).attr('d', function (sectionIndex) {
           var arcStartRad = percToRad(totalPercent);
           var arcEndRad = arcStartRad + percToRad(sectionPercentage);
           totalPercent += sectionPercentage;
-
           var startPadRad = sectionIndex === 0 ? 0 : padRad / 2;
           var endPadRad = sectionIndex === _this._sectionsCount ? 0 : padRad / 2;
           var arc = (0, _d3Shape.arc)().outerRadius(radius - _this._chartInset).innerRadius(radius - _this._chartInset - _this._barWidth).startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad);
-
           return arc(_this);
         });
 
@@ -289,9 +291,9 @@
           percent: this._percent,
           radius: this._needleRadius
         });
+
         this._update();
       }
-
       /**
        * Updates the active arc and the gauge status (min or max) based on the current percent.
        *
@@ -299,25 +301,27 @@
        */
 
     }, {
-      key: '_update',
+      key: "_update",
       value: function _update() {
         var _this2 = this;
 
         if (!this._arcs) {
           return;
         }
+
         this._arcs.classed('active', function (d, i) {
           return i === Math.floor(_this2._percent * _this2._sectionsCount) || i === _this2._arcs.size() - 1 && _this2._percent === 1;
         });
+
         this._chart.classed('min', this._percent === 0);
+
         this._chart.classed('max', this._percent === 1);
       }
     }, {
-      key: 'interval',
+      key: "interval",
       get: function get() {
         return this._scale.domain();
       }
-
       /**
        * Sets the interval of the gauge (min and max values).
        *
@@ -328,9 +332,9 @@
         if (!(interval instanceof Array) || interval.length !== 2 || isNaN(interval[0]) || isNaN(interval[1]) || interval[0] > interval[1]) {
           throw new Error('The interval specified is invalid.');
         }
+
         this._scale = (0, _d3Scale.scaleLinear)().domain(interval).range([0, 1]).clamp(true);
       }
-
       /**
        * Gets the needle percent.
        *
@@ -338,11 +342,10 @@
        */
 
     }, {
-      key: 'percent',
+      key: "percent",
       get: function get() {
         return this._percent;
       }
-
       /**
        * Sets the needle percent. The percent must be between 0 and 1.
        *
@@ -353,13 +356,15 @@
         if (isNaN(percent) || percent < 0 || percent > 1) {
           throw new RangeError('The percentage must be between 0 and 1.');
         }
+
         if (this._needle) {
           this._needle.update(percent);
         }
+
         this._percent = percent;
+
         this._update();
       }
-
       /**
        * Sets the needle position based on the specified value inside the interval.
        * If the value specified is outside the interval, the value will be
@@ -369,15 +374,18 @@
        */
 
     }, {
-      key: 'value',
+      key: "value",
       set: function set(value) {
         if (isNaN(value)) {
           throw new Error('The specified value must be a number.');
         }
+
         this.percent = this._scale(value);
       }
     }]);
 
     return SimpleGauge;
   }();
+
+  _exports.SimpleGauge = SimpleGauge;
 });

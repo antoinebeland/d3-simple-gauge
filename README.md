@@ -1,7 +1,6 @@
 D3 Simple Gauge
 ===============
 [![Build Status](https://travis-ci.org/antoinebeland/d3-simple-gauge.svg?branch=master)](https://travis-ci.org/antoinebeland/d3-simple-gauge)
-![Dependencies Status](https://img.shields.io/david/antoinebeland/d3-simple-gauge.svg)
 [![npm version](https://badge.fury.io/js/d3-simple-gauge.svg)](https://badge.fury.io/js/d3-simple-gauge)
 
 A simple gauge written with D3.js that can be easily included in a project.
@@ -9,20 +8,20 @@ A simple gauge written with D3.js that can be easily included in a project.
 ![Gauge](./doc/gauge.PNG)
 
 
-The base code was used from [this example](https://codepen.io/anon/pen/WKyXgr) on CodePen and from 
-[this tutorial](https://jaketrent.com/post/rotate-gauge-needle-in-d3/). I refactored the code of the example to make 
+The base code was used from [this example](https://codepen.io/anon/pen/WKyXgr) on CodePen and from
+[this tutorial](https://jaketrent.com/post/rotate-gauge-needle-in-d3/). I refactored the code of the example to make
 it work with D3.js v5, and I restructured the code to make it more flexible. Thanks to the original author ([Jack Trent](https://github.com/jaketrent)) for its work.
 
 A [demo](https://www.antoinebeland.com/d3-simple-gauge/) of the gauge is available on my personal website.
 
 Quick Start
 -----------
-The first step you need to do before to use the script is to include [D3.js v5](https://github.com/d3/d3) in your 
+The first step you need to do before to use the script is to include [D3.js v5](https://github.com/d3/d3) in your
 project.
 
 Once you have included D3 in your dependencies, you have the following options to use the script:
 
-- Use the latest [version](https://raw.githubusercontent.com/antoinebeland/d3-simple-gauge/master/dist/d3-simple-gauge.js) 
+- Use the latest [version](https://raw.githubusercontent.com/antoinebeland/d3-simple-gauge/master/dist/d3-simple-gauge.js)
 of the master branch (see `dist` folder)
 - Clone the repo: `git clone https://github.com/antoinebeland/d3-simple-gauge.git`
 - Install with [npm](https://www.npmjs.com/package/d3-simple-gauge): `npm install d3-simple-gauge`
@@ -43,7 +42,7 @@ const svg = d3.select('body')
 
 const simpleGauge = new window.d3SimpleGauge.SimpleGauge({
   el: svg.append('g'),        // The element that hosts the gauge
-  height: 200,                // The height of the gauge   
+  height: 200,                // The height of the gauge
   interval: [0, 200],         // The interval (min and max values) of the gauge (optional)
   sectionsCount: 2,           // The number of sections in the gauge
   width: 400                  // The width of the gauge
@@ -51,13 +50,13 @@ const simpleGauge = new window.d3SimpleGauge.SimpleGauge({
 
 setTimeout(() => {
   simpleGauge.percent = 0.7;  // The new percent of the needle to set (70%)
-  
+
   setTimeout(() => {
     simpleGauge.value = 42;  // The new value of the needle to set inside the interval (21%)
   }, 1500);
 }, 1500);
 ```
-This script is written in ECMAScript 6 and is transpiled in [UMD](https://github.com/umdjs/umd) format. So, you can 
+This script is written in ECMAScript 6 and is transpiled in [UMD](https://github.com/umdjs/umd) format. So, you can
 import it easily as a module. Look at the following examples to know how to import it:
 
 ```javascript
@@ -102,8 +101,8 @@ Once the gauge is initialized, you can use the following properties to manipulat
 To apply colors on the gauge, you can specify them with the `needleColor` and `sectionsColors` properties in the
 configuration or with CSS classes.
 
-If you choose to use `needleColor` and `sectionsColors` properties to set colors, be sure to specify these properties 
-in the configuration like in the following example. Noted that the color specified should be a valid 
+If you choose to use `needleColor` and `sectionsColors` properties to set colors, be sure to specify these properties
+in the configuration like in the following example. Noted that the color specified should be a valid
 [CSS color](https://www.w3schools.com/css/css_colors.asp).
 
 ```js
@@ -118,9 +117,9 @@ in the configuration like in the following example. Noted that the color specifi
 }
 ```
 
-You can use CSS classes too to apply colors on the gauge. There are two classes used to set the needle colors 
-(`needle` and `needle-center`), and there is one class for each group generated (`chart-color{i}`), where `{i}` is a 
-number between 1 and the groups count, to apply a specific color to a group. You can take a look at the following 
+You can use CSS classes too to apply colors on the gauge. There are two classes used to set the needle colors
+(`needle` and `needle-center`), and there is one class for each group generated (`chart-color{i}`), where `{i}` is a
+number between 1 and the groups count, to apply a specific color to a group. You can take a look at the following
 example to know how to use these classes.
 
 ```css
@@ -147,7 +146,7 @@ example to know how to use these classes.
 ```
 
 There are also other classes that can be used. Based on the percentage of the gauge, the arc points out by the needle
-has the `active` class. This can be useful if you want to apply a different style to the active group. Also, when the 
+has the `active` class. This can be useful if you want to apply a different style to the active group. Also, when the
 minimum (0%) or the maximum (100%) of the gauge are reached, the gauge element has `min` or `max` classes. Look at the
 following examples to know how to use these classes.
 
@@ -157,7 +156,7 @@ following examples to know how to use these classes.
   fill: #000;
 }
 
-/* When the gauge is at 0%, all the arcs appear blue */ 
+/* When the gauge is at 0%, all the arcs appear blue */
 .min .arc {
   fill: #00f;
 }
@@ -169,7 +168,7 @@ following examples to know how to use these classes.
 ```
 
 If you have used `sectionsColor` properties to set group colors, you have to add `!important` rule with the
-`fill` property if you want that `active`, `min` or `max` classes can be applied.     
+`fill` property if you want that `active`, `min` or `max` classes can be applied.
 
 License
 -------

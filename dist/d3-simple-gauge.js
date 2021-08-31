@@ -243,77 +243,6 @@
 
 
     _createClass(SimpleGauge, [{
-      key: "_initialize",
-
-      /**
-       * Initializes the simple gauge.
-       *
-       * @private
-       */
-      value: function _initialize() {
-        var _this = this;
-
-        var sectionPercentage = 1 / this._sectionsCount / 2;
-        var padRad = CONSTANTS.PAD_RAD;
-        var totalPercent = 0.75; // Start at 270deg
-
-        var radius = Math.min(this._width, this._height * 2) / 2;
-        this._chart = this._el.append('g').attr('transform', "translate(".concat(this._width / 2, ", ").concat(this._height, ")"));
-        this._arcs = this._chart.selectAll('.arc').data((0, _d3Array.range)(1, this._sectionsCount + 1)).enter().append('path').attr('class', function (sectionIndex) {
-          return "arc chart-color".concat(sectionIndex);
-        }).attr('d', function (sectionIndex) {
-          var arcStartRad = percToRad(totalPercent);
-          var arcEndRad = arcStartRad + percToRad(sectionPercentage);
-          totalPercent += sectionPercentage;
-          var startPadRad = sectionIndex === 0 ? 0 : padRad / 2;
-          var endPadRad = sectionIndex === _this._sectionsCount ? 0 : padRad / 2;
-          var arc = (0, _d3Shape.arc)().outerRadius(radius - _this._chartInset).innerRadius(radius - _this._chartInset - _this._barWidth).startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad);
-          return arc(_this);
-        });
-
-        if (this._sectionsColors) {
-          this._arcs.style('fill', function (sectionIndex) {
-            return _this._sectionsColors[sectionIndex - 1];
-          });
-        }
-
-        this._needle = new Needle({
-          animationDelay: this._animationDelay,
-          animationDuration: this._animationDuration,
-          color: this._needleColor,
-          easeType: this._easeType,
-          el: this._chart,
-          length: this._height * 0.5,
-          percent: this._percent,
-          radius: this._needleRadius
-        });
-
-        this._update();
-      }
-      /**
-       * Updates the active arc and the gauge status (min or max) based on the current percent.
-       *
-       * @private
-       */
-
-    }, {
-      key: "_update",
-      value: function _update() {
-        var _this2 = this;
-
-        if (!this._arcs) {
-          return;
-        }
-
-        this._arcs.classed('active', function (d, i) {
-          return i === Math.floor(_this2._percent * _this2._sectionsCount) || i === _this2._arcs.size() - 1 && _this2._percent === 1;
-        });
-
-        this._chart.classed('min', this._percent === 0);
-
-        this._chart.classed('max', this._percent === 1);
-      }
-    }, {
       key: "interval",
       get: function get() {
         return this._scale.domain();
@@ -377,6 +306,77 @@
         }
 
         this.percent = this._scale(value);
+      }
+      /**
+       * Initializes the simple gauge.
+       *
+       * @private
+       */
+
+    }, {
+      key: "_initialize",
+      value: function _initialize() {
+        var _this = this;
+
+        var sectionPercentage = 1 / this._sectionsCount / 2;
+        var padRad = CONSTANTS.PAD_RAD;
+        var totalPercent = 0.75; // Start at 270deg
+
+        var radius = Math.min(this._width, this._height * 2) / 2;
+        this._chart = this._el.append('g').attr('transform', "translate(".concat(this._width / 2, ", ").concat(this._height, ")"));
+        this._arcs = this._chart.selectAll('.arc').data((0, _d3Array.range)(1, this._sectionsCount + 1)).enter().append('path').attr('class', function (sectionIndex) {
+          return "arc chart-color".concat(sectionIndex);
+        }).attr('d', function (sectionIndex) {
+          var arcStartRad = percToRad(totalPercent);
+          var arcEndRad = arcStartRad + percToRad(sectionPercentage);
+          totalPercent += sectionPercentage;
+          var startPadRad = sectionIndex === 0 ? 0 : padRad / 2;
+          var endPadRad = sectionIndex === _this._sectionsCount ? 0 : padRad / 2;
+          var arc = (0, _d3Shape.arc)().outerRadius(radius - _this._chartInset).innerRadius(radius - _this._chartInset - _this._barWidth).startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad);
+          return arc(_this);
+        });
+
+        if (this._sectionsColors) {
+          this._arcs.style('fill', function (sectionIndex) {
+            return _this._sectionsColors[sectionIndex - 1];
+          });
+        }
+
+        this._needle = new Needle({
+          animationDelay: this._animationDelay,
+          animationDuration: this._animationDuration,
+          color: this._needleColor,
+          easeType: this._easeType,
+          el: this._chart,
+          length: this._height * 0.5,
+          percent: this._percent,
+          radius: this._needleRadius
+        });
+
+        this._update();
+      }
+      /**
+       * Updates the active arc and the gauge status (min or max) based on the current percent.
+       *
+       * @private
+       */
+
+    }, {
+      key: "_update",
+      value: function _update() {
+        var _this2 = this;
+
+        if (!this._arcs) {
+          return;
+        }
+
+        this._arcs.classed('active', function (d, i) {
+          return i === Math.floor(_this2._percent * _this2._sectionsCount) || i === _this2._arcs.size() - 1 && _this2._percent === 1;
+        });
+
+        this._chart.classed('min', this._percent === 0);
+
+        this._chart.classed('max', this._percent === 1);
       }
     }]);
 

@@ -42,7 +42,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-uglify": "^3.0.2",
-    "jsdom": "^14.1.0",
+    "jsdom": "^16.5.0",
     "mocha": "^6.2.3",
     "pump": "^3.0.0",
     "random-number": "0.0.9",

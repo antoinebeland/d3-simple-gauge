@@ -43,7 +43,7 @@
     "gulp-rename": "^1.4.0",
     "gulp-uglify": "^3.0.2",
     "jsdom": "^14.1.0",
-    "mocha": "^6.2.3",
+    "mocha": "^10.2.0",
     "pump": "^3.0.0",
     "random-number": "0.0.9",
     "should": "^13.2.3"
